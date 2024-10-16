@@ -3,8 +3,8 @@ import './assets/main.css'
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router'
-import Echo from 'laravel-echo';
-import Pusher from 'pusher-js';
+// import Echo from 'laravel-echo';
+// import Pusher from 'pusher-js';
 
 import 'vuetify/styles'
 import "@/assets/css/_icons.css"
@@ -22,8 +22,8 @@ import canGoToPlugin from './plugins/canGoTo';
 import isRole from '@/plugins/roles';
 
 
-const VITE_APP_PUSHER_APP_KEY = import.meta.env.VITE_APP_PUSHER_APP_KEY
-const VITE_APP_PUSHER_APP_CLUSTER = import.meta.env.VITE_APP_PUSHER_APP_CLUSTER
+// const VITE_APP_PUSHER_APP_KEY = import.meta.env.VITE_APP_PUSHER_APP_KEY
+// const VITE_APP_PUSHER_APP_CLUSTER = import.meta.env.VITE_APP_PUSHER_APP_CLUSTER
 
 
 const vuetify = createVuetify({
@@ -37,12 +37,11 @@ const vuetify = createVuetify({
 })
 const app = createApp(App)
 
-// @ts-ignore
-window.Pusher = Pusher;
-// @ts-ignore
-window.Echo = new Echo({
-    broadcaster: 'pusher', key: VITE_APP_PUSHER_APP_KEY, cluster: VITE_APP_PUSHER_APP_CLUSTER, forceTLS: true,
-});
+// window.Pusher = Pusher;
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher', key: VITE_APP_PUSHER_APP_KEY, cluster: VITE_APP_PUSHER_APP_CLUSTER, forceTLS: true,
+// });
 
 
 app.use(validationRules)
