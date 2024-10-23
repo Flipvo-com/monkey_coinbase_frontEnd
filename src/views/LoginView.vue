@@ -20,6 +20,14 @@
                                       density="comfortable" variant="solo"></v-text-field>
                         <v-text-field label="Password" v-model="password" type="password"
                                       density="comfortable" variant="solo"></v-text-field>
+
+                        <div>
+                            <p>
+                                if you don't have an account, please
+                                <router-link class="_text-blue-400"
+                                    :to="{name:'register'}">register</router-link>
+                            </p>
+                        </div>
                     </v-card-text>
                     <v-card-actions>
                         <v-btn color="primary"
@@ -47,7 +55,6 @@ const attemptLogin = async () => {
     await login({
         email: email.value,
         password: password.value,
-        accountType: accountType.value
     }).catch((e) => {
         loginLoading.value = false;
         console.log('error', e)

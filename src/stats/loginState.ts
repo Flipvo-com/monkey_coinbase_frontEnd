@@ -7,7 +7,7 @@ import type {StudentType} from "@/stats/studentState";
 interface LoginData {
     email: string;
     password: string;
-    accountType: string;
+    accountType?: string;
 }
 
 interface UserModel extends StudentType{

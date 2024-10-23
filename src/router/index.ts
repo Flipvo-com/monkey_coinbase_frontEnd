@@ -40,19 +40,43 @@ const routes: Array<RouteRecordRaw> = [
             __auth: false
         },
         component: () => import('@/views/RegisterView.vue')
-    }
-    // {
-    //     path: '/dashboard',
-    //     name: 'dashboard',
-    //     meta: {
-    //         __name: 'dashboard',
-    //         __auth: true
-    //     },
-    //     redirect: {name: 'monitor'},
-    //     component: () => import('@/views/DashboardView.vue'),
-    //     children: [
-    //     ]
-    // },
+    },
+    {
+        path: '/dashboard',
+        name: 'dashboard',
+        meta: {
+            __name: 'dashboard',
+            __auth: true
+        },
+        redirect: {name: 'analyse'},
+        component: () => import('@/views/DashboardView.vue'),
+        children: [
+            {
+                path: 'analyse',
+                name: 'analyse',
+                meta: {
+                    __name: 'analyse',
+                    __auth: true
+                },
+                components: {
+                    dashboard:() => import('@/views/Dashboard/Analyse.vue')
+                }
+            },
+            // {
+            //     path:'documents',
+            //     name:'documents',
+            //     meta:{
+            //         __name:'documents',
+            //         __auth:true
+            //     },
+            //     components:{
+            //         dashboard:{
+            //             template:'<h1>Documents</h1>'
+            //         }
+            //     }
+            // }
+        ]
+    },
 ]
 
 const router = createRouter({

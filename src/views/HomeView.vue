@@ -31,7 +31,8 @@
             <v-btn text>Markets</v-btn>
             <v-btn text>Features</v-btn>
             <v-btn text>About</v-btn>
-            <v-btn text>Contact</v-btn>
+            <router-link :to="{name:'login'}" >login</router-link>
+            <router-link :to="{name:'register'}" >register</router-link>
         </v-app-bar>
 
         <v-main>
