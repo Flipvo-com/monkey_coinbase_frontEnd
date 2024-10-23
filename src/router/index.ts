@@ -59,7 +59,7 @@ const routes: Array<RouteRecordRaw> = [
                     __auth: true
                 },
                 components: {
-                    dashboard:() => import('@/views/Dashboard/Analyse.vue')
+                    dashboard:() => import('@/views/Dashboard/analyse.vue')
                 }
             },
             // {
