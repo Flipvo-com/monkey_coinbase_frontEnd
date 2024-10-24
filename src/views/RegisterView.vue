@@ -35,14 +35,17 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-btn color="primary"
+                              icon="fa-thin fa-home"
+                               :to="{name:'home'}"></v-btn>
+                        <v-spacer/>
+                        <v-btn color="success"  variant="flat"
                                @click="attemptRegister">Register
                         </v-btn>
                     </v-card-actions>
                 </v-card>
             </div>
         </v-main>
-        <vue-particles class="_absolute _z-[-10]"
-                       id="particlesRegisterPage" :options="particlesConfig"/>
+        <MyParticles/>
     </v-app>
 </template>
 <script setup lang="ts">
@@ -51,6 +54,7 @@ import {ref} from "vue";
 import axios from "axios";
 import {loginState} from "@/stats/loginState";
 import particlesConfig from '@/assets/particles.json'
+import MyParticles from "@/components/common/MyParticles.vue";
 
 const {login} = loginState();
 const loadingProgress = ref(false);

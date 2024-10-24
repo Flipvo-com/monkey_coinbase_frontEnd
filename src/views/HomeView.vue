@@ -192,8 +192,11 @@
 <script setup lang="ts">
 
 import {useTheme} from "vuetify";
+import {onUnmounted} from "vue";
 
 const theme = useTheme();
+theme.global.name.value='light'
+
 
 const topCoins = [
     {name: 'Bitcoin', symbol: '₿', price: '$45,000', change: 2.5, color: '#f7931a'},
@@ -216,6 +219,9 @@ const features = [
         color: '#ff9800'
     }
 ]
-theme.global.name.value='light'
+
+onUnmounted(() => {
+    theme.global.name.value='dark'
+})
 
 </script>

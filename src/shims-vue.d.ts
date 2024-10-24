@@ -1,6 +1,7 @@
 // src/shims-vue.d.ts
 
 import { ComponentCustomProperties } from '@vue/runtime-core';
+declare module "vue3-particles";
 
 declare module '@vue/runtime-core' {
     /**
@@ -17,4 +18,5 @@ declare module '*.vue' {
     const component: DefineComponent<{}, {}, any>;
     export default component;
 }
+
 
