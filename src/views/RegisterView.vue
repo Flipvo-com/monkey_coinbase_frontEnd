@@ -42,7 +42,7 @@
             </div>
         </v-main>
         <vue-particles class="_absolute _z-[-10]"
-                       id="particlesRegisterPage" url="src/assets/particles.json" />
+                       id="particlesRegisterPage" :options="particlesConfig"/>
     </v-app>
 </template>
 <script setup lang="ts">
@@ -50,6 +50,7 @@
 import {ref} from "vue";
 import axios from "axios";
 import {loginState} from "@/stats/loginState";
+import particlesConfig from '@/assets/particles.json'
 
 const {login} = loginState();
 const loadingProgress = ref(false);

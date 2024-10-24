@@ -38,13 +38,13 @@
             </div>
         </v-main>
             <vue-particles class="_absolute _z-[-10]"
-                id="particlesLoginPage" url="src/assets/particles.json" />
+                id="particlesLoginPage" :options="particlesConfig" />
     </v-app>
 </template>
 <script setup lang="ts">
 import {loginState} from "@/stats/loginState.js";
 import {ref } from "vue";
-
+import particlesConfig from '@/assets/particles.json'
 
 const email = ref('');
 const password = ref('');

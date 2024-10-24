@@ -51,9 +51,6 @@ const app = createApp(App)
 // });
 
 
-console.log(VueParticles)
-console.log(loadSlim)
-
 app.use(VueParticles, {
     init: async engine => {
         // await loadFull(engine); // you can load the full tsParticles library from "tsparticles" if you need it
