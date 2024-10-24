@@ -8,5 +8,11 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src')
     }
-  }
+  },
+  optimizeDeps: {
+    include: [
+        "@tsparticles/vue3",
+        "@tsparticles/slim"
+    ], // Essayez d'ajouter cette ligne pour optimiser l'importation du module
+  },
 });

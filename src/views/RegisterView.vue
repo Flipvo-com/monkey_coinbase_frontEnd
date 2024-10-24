@@ -1,6 +1,5 @@
 <template>
-
-    <v-app>
+    <v-app class="!_bg-transparent">
         <v-main>
             <div class="_flex _justify-center _items-center _h-screen _flex-col _gap-4">
                 <router-link :to="{name:'home'}">
@@ -42,6 +41,8 @@
                 </v-card>
             </div>
         </v-main>
+        <vue-particles class="_absolute _z-[-10]"
+                       id="particlesRegisterPage" url="src/assets/particles.json" />
     </v-app>
 </template>
 <script setup lang="ts">
@@ -59,7 +60,6 @@ const formDetails = ref({
     password_confirmation : ''
 
 });
-
 const attemptRegister = async () => {
     loadingProgress.value = true;
 
