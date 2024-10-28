@@ -5,29 +5,39 @@ import {
     type RouteLocationNormalized,
     type RouteRecordRaw
 } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
 import Login from '@/views/LoginView.vue'
 
 import middlewareRegistry from '../../src/router/middleware/core/middlewareRegistry'
 import {middlewarePipeline, parseMiddleware} from '@/router/middleware/core/middlewarePipeline';
 
+// Define custom meta properties
+export interface CustomRouteMeta {
+    name?: string;
+}
 
-const routes: Array<RouteRecordRaw> = [
+// Create a custom type for routes with custom meta
+export  type CustomRouteRecordRaw = RouteRecordRaw & {
+    meta?: CustomRouteMeta;
+};
+
+const routes:CustomRouteRecordRaw[]= [
 
     {
         path: '/',
         name: 'home',
         meta: {
-            __name: 'home',
+            name: 'home',
             __auth: false
         },
-        component: HomeView,
+            redirect: {name: 'login'},
+        // component: HomeView,
+        // children:undefined
     },
     {
         path: '/login',
         name: 'login',
         meta: {
-            __name: 'login',
+            name: 'login',
             __auth: false
         },
         component: Login
@@ -36,37 +46,51 @@ const routes: Array<RouteRecordRaw> = [
         path: '/register',
         name: 'register',
         meta: {
-            __name: 'register',
+            name: 'register',
             __auth: false
         },
-        component: () => import('@/views/RegisterView.vue')
+            redirect: {name: 'login'},
+        // component: () => import('@/views/RegisterView.vue')
     },
     {
         path: '/dashboard',
         name: 'dashboard',
         meta: {
-            __name: 'dashboard',
-            __auth: true
+            name: 'dashboard',
+            middleware: ['auth']
         },
-        redirect: {name: 'analyse'},
+        redirect: {name: 'dashboardIndex'},
         component: () => import('@/views/DashboardView.vue'),
         children: [
+            {
+                path: 'index',
+                name: 'dashboardIndex',
+                meta: {
+                    name: 'Home',
+                    icon:'fa-duotone fa-home',
+                    __auth: true
+                },
+                components: {
+                    dashboard:() => import('@/views/Dashboard/dashboardIndex.vue')
+                }
+            },
             {
                 path: 'analyse',
                 name: 'analyse',
                 meta: {
-                    __name: 'analyse',
+                    name: 'Analyse',
+                    icon:'fa-duotone fa-chart-line',
                     __auth: true
                 },
                 components: {
-                    dashboard:() => import('@/views/Dashboard/analyse.vue')
+                    dashboard:() => import('@/views/Dashboard/analyseData.vue')
                 }
             },
             // {
             //     path:'documents',
             //     name:'documents',
             //     meta:{
-            //         __name:'documents',
+            //         name:'documents',
             //         __auth:true
             //     },
             //     components:{
@@ -86,6 +110,7 @@ const router = createRouter({
 
 router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next) => {
     // If no middleware is specified, proceed to the route
+    // console.log('to', to)
     if (!to.meta.middleware) {
         return next();
     }

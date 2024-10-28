@@ -13,7 +13,6 @@ import {ref} from "vue";
 
 const  options = ref(particlesJSON)
 
-
 const particlesInit = async (engine: Engine) => {
     await loadSlim(engine);
 }

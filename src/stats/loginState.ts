@@ -3,14 +3,13 @@ import {createGlobalState, StorageSerializers, useStorage} from "@vueuse/core";
 import router from "@/router";
 import axios from "axios";
 import {ref, type Ref} from "vue";
-import type {StudentType} from "@/stats/studentState";
 interface LoginData {
     email: string;
     password: string;
     accountType?: string;
 }
 
-interface UserModel extends StudentType{
+interface UserModel {
     [key: string]: any
 }
 
