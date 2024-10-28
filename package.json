@@ -12,6 +12,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@capacitor/ios": "^6.1.2",
     "@fullcalendar/core": "^6.1.14",
     "@fullcalendar/interaction": "^6.1.14",
     "@fullcalendar/list": "^6.1.14",
@@ -35,6 +36,7 @@
     "vuetify": "^3.6.10"
   },
   "devDependencies": {
+    "@capacitor/cli": "^4.0.0",
     "@rushstack/eslint-patch": "^1.8.0",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.14",
