@@ -12,7 +12,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@capacitor/core": "^6.1.2",
     "@capacitor/ios": "^6.1.2",
+    "@capacitor/keyboard": "^6.0.2",
     "@fullcalendar/core": "^6.1.14",
     "@fullcalendar/interaction": "^6.1.14",
     "@fullcalendar/list": "^6.1.14",
@@ -36,7 +38,7 @@
     "vuetify": "^3.6.10"
   },
   "devDependencies": {
-    "@capacitor/cli": "^4.0.0",
+    "@capacitor/cli": "^4.8.2",
     "@rushstack/eslint-patch": "^1.8.0",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.14",
@@ -50,7 +52,7 @@
     "npm-run-all2": "^6.2.0",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
-    "typescript": "~5.4.0",
+    "typescript": "^5.6.3",
     "vite": "^5.3.1",
     "vite-plugin-vue-devtools": "^7.3.1",
     "vue-tsc": "^2.0.29"

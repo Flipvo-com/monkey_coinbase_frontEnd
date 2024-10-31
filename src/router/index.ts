@@ -40,7 +40,7 @@ const routes:CustomRouteRecordRaw[]= [
             name: 'login',
             __auth: false
         },
-        component: Login
+        component: ()=> import('@/views/LoginView.vue')
     },
     {
         path: '/register',

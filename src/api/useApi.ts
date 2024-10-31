@@ -1,5 +1,5 @@
 import {computed} from "vue";
-import axios, {type RawAxiosRequestConfig} from "axios";
+import axios, {AxiosRequestConfig, type RawAxiosRequestConfig} from "axios";
 import {useAxios, type UseAxiosOptions} from "@vueuse/integrations/useAxios";
 import {createEventHook, whenever} from "@vueuse/core";
 import {toastFromResponse} from "@/stats/Utils";
@@ -63,7 +63,7 @@ apiInstance.interceptors.response.use(
 
 export function useApi<T>(
     path = "",
-    config: RawAxiosRequestConfig<any> = {},
+    config: AxiosRequestConfig<any> = {},
     options: UseAxiosOptions & { initialData?: any } = {
         immediate: true,
         shallow: true,

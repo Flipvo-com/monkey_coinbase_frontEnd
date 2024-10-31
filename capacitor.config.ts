@@ -4,7 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.monkeyCoin.app',
   appName: 'monkeyCoin',
   webDir: 'dist',
-  bundledWebRuntime: false
+  plugins: {
+    Keyboard: {
+      style: 'default',
+      resizeOnFullScreen: true
+    }
+  },
 };
 
 export default config;
