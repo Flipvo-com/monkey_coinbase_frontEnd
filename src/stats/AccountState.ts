@@ -53,8 +53,8 @@ export interface AccountOrderModel {
   };
   order_configuration: {
     limit_limit_gtc: {
-      base_size: string;
-      limit_price: string;
+      base_size: number;
+      limit_price: number;
       post_only: boolean;
     };
   };

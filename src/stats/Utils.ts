@@ -1,7 +1,8 @@
 import {toast} from "vue3-toastify";
-import {attemptAccess} from "@/router/middleware/core/accessRouteChack";
+import {attemptAccess} from "@/plugins/middlewares/core/accessRouteChack";
 import router from '@/router';
 import type {_RouteRecordBase, RouteLocationNormalized} from "vue-router";
+import {toastController} from "@ionic/vue";
 export interface GenderType {
     male: "male";
     female: "female";
@@ -65,3 +66,29 @@ export const isRole = (roles: string | string[]): boolean =>{
     // Check if the user's role is in the allowedRoles array
     return allowedRoles.includes(user.accountType);
 }
+
+interface  presentToastConfigType  {
+    position?: 'top' | 'middle' | 'bottom' ;
+    message?: string ;
+    duration?: number;
+    icon?:any;
+
+}
+export  const presentToast = async (con:presentToastConfigType)=> {
+    const toast = await toastController.create({
+        message: con.message,
+        duration:  con.duration || 2000,
+        position: con.position,
+        icon:con.icon
+    });
+
+    await toast.present();
+}
+
+export const getFromRoute = (route: { name: string; subject?: keyof RouteLocationNormalized }) => {
+    const r = findRouteByName(router.getRoutes(), route.name) as RouteLocationNormalized;
+    route.subject = route.subject || 'path';
+    console.log(router.getRoutes() , route.name)
+    // Use type assertion for the subject property
+    return r[route.subject as keyof RouteLocationNormalized] as string;
+};

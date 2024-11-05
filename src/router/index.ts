@@ -1,14 +1,22 @@
 import {
     createRouter,
     createWebHistory,
-    // type  NavigationGuardNext,
-    type RouteLocationNormalized,
+} from '@ionic/vue-router'
+import {
+    type RouteLocationNormalized, Router,
     type RouteRecordRaw
 } from 'vue-router'
-import Login from '@/views/LoginView.vue'
 
-import middlewareRegistry from '../../src/router/middleware/core/middlewareRegistry'
-import {middlewarePipeline, parseMiddleware} from '@/router/middleware/core/middlewarePipeline';
+import middlewareRegistry from '@/plugins/middlewares/core/middlewareRegistry'
+import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/middlewarePipeline';
+
+export interface MiddlewareContext {
+    to: RouteLocationNormalized;
+    from: RouteLocationNormalized;
+    next: () => Promise<void>; // Ensure next is a Promise-returning function
+    router: Router;
+    params?: string[];
+}
 
 // Define custom meta properties
 export interface CustomRouteMeta {
@@ -20,8 +28,7 @@ export  type CustomRouteRecordRaw = RouteRecordRaw & {
     meta?: CustomRouteMeta;
 };
 
-const routes:CustomRouteRecordRaw[]= [
-
+const routes: CustomRouteRecordRaw[] = [
     {
         path: '/',
         name: 'home',
@@ -29,7 +36,7 @@ const routes:CustomRouteRecordRaw[]= [
             name: 'home',
             __auth: false
         },
-            redirect: {name: 'login'},
+        redirect: {name: 'login'},
         // component: HomeView,
         // children:undefined
     },
@@ -38,9 +45,9 @@ const routes:CustomRouteRecordRaw[]= [
         name: 'login',
         meta: {
             name: 'login',
-            __auth: false
+            middleware: ['guest'],
         },
-        component: ()=> import('@/views/LoginView.vue')
+        component: () => import('@/views/LoginView.vue')
     },
     {
         path: '/register',
@@ -49,7 +56,7 @@ const routes:CustomRouteRecordRaw[]= [
             name: 'register',
             __auth: false
         },
-            redirect: {name: 'login'},
+        redirect: {name: 'login'},
         // component: () => import('@/views/RegisterView.vue')
     },
     {
@@ -67,24 +74,18 @@ const routes:CustomRouteRecordRaw[]= [
                 name: 'dashboardIndex',
                 meta: {
                     name: 'Home',
-                    icon:'fa-duotone fa-home',
-                    __auth: true
+                    icon: 'fa-duotone fa-home',
                 },
-                components: {
-                    dashboard:() => import('@/views/Dashboard/dashboardIndex.vue')
-                }
+                component: () => import('@/views/Dashboard/dashboardIndex.vue')
             },
             {
                 path: 'analyse',
                 name: 'analyse',
                 meta: {
                     name: 'Analyse',
-                    icon:'fa-duotone fa-chart-line',
-                    __auth: true
+                    icon: 'fa-duotone fa-chart-line',
                 },
-                components: {
-                    dashboard:() => import('@/views/Dashboard/analyseData.vue')
-                }
+                component: () => import('@/views/Dashboard/analyseData.vue')
             },
             // {
             //     path:'documents',

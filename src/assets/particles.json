@@ -33,7 +33,7 @@
   },
   "particles": {
     "links": {
-      "blink": false,
+      "blink": true,
       "color": {
         "value": "#ffffff"
       },
@@ -63,7 +63,15 @@
         "offset": 12,
         "value": 40
       },
-      "direction": "top"
+      "direction": "top",
+      "out_mode": {
+        "default": "out",
+        "bottom": "out",
+        "left": "out",
+        "right": "out",
+        "top": "out"
+      },
+        "random": true
     },
     "number": {
       "value": 100

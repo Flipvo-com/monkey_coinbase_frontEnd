@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.monkeyCoin.app',
-  appName: 'monkeyCoin',
+  appId: 'com.monkeyTrad.app',
+  appName: 'monkeyTrad',
   webDir: 'dist',
   plugins: {
     Keyboard: {
