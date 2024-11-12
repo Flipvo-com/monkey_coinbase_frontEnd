@@ -60,24 +60,6 @@ executeGlobalLongPolling({
  * @returns {{totalCash: number, totalAccountValue: *, totalCryptoAvailable: *, totalCryptoValue: *}}
 
 
- tim 50% - $500
- admin 50% - $500
- total = $1000
-
- --------------------------
- total = $1,132.23
- ----------------------------
-
- tim - 50% * $1,200 - $600 + $200 = $800
- admin - 50% * $1,200 - $600
-
-
- total - $1,400
-
- (800/1400) *100 = 57.14
- (600/1400) *100 =
-
-
 
  */
 const getTotalValue = () => {
