@@ -7,7 +7,7 @@
 
 import router from '@/router';
 import {toast} from "vue3-toastify";
-import {attemptAccess} from "@/router/middleware/core/accessRouteChack";
+import {attemptAccess} from "@/plugins/middlewares/core/accessRouteChack";
 import type {_RouteRecordBase, RouteLocationNormalized} from "vue-router";
 
 export interface GenderType {
