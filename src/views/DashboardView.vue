@@ -1,20 +1,19 @@
 <template>
   <v-app v-if="pageAvailable">
-    <top-bar />
-    <DashboardRouteView />
-    <BottomBar />
+    <top-bar/>
+    <DashboardRouteView/>
+    <BottomBar/>
   </v-app>
-  <LoadingProgress v-else />
+  <LoadingProgress v-else/>
 </template>
+
 <script setup lang="ts">
+
 import router from "@/router";
-import type { RouteRecordRaw } from "vue-router";
-import { type Ref, ref, type UnwrapRef } from "vue";
-import { AccountState } from "@/stats/AccountState";
-import {
-  executeGlobalLongPolling,
-  onResultSuccessGlobalLongPolling,
-} from "@/api/useLongPolling";
+import type {RouteRecordRaw} from "vue-router";
+import {type Ref, ref, type UnwrapRef} from "vue";
+import {AccountState} from "@/stats/AccountState";
+import {executeGlobalLongPolling, onResultSuccessGlobalLongPolling} from "@/api/useLongPolling";
 import BottomBar from "@/components/common/BottomBar.vue";
 import TopBar from "@/components/common/TopBar.vue";
 import LoadingProgress from "@/components/common/LoadingProgress.vue";
@@ -28,11 +27,11 @@ const {
 } = AccountState();
 
 const dashboardRoute: RouteRecordRaw = router.options.routes.find(
-  (route) => route.name === "dashboard",
+    (route) => route.name === "dashboard",
 ) as RouteRecordRaw;
 
 const dashboardChildren: Ref<UnwrapRef<RouteRecordRaw>[]> = ref(
-  dashboardRoute?.children || [],
+    dashboardRoute?.children || [],
 );
 
 const pageAvailable = ref(false);
@@ -42,13 +41,13 @@ const renderAllJsonData = (res: any) => {
 };
 
 dashboardChildren.value =
-  dashboardRoute?.children!.filter((i: RouteRecordRaw) => {
-    if (i.meta) {
-      return i.meta["sidebar"] !== false;
-    } else {
-      return false;
-    }
-  }) || [];
+    dashboardRoute?.children!.filter((i: RouteRecordRaw) => {
+      if (i.meta) {
+        return i.meta["sidebar"] !== false;
+      } else {
+        return false;
+      }
+    }) || [];
 
 executeGlobalLongPolling({
   data: {
@@ -79,15 +78,15 @@ const getTotalValue = () => {
 
   const tradeAccounts = this.getTradeAccounts();
   const usdAccount = this.accounts.find(
-    (account) => account.currency === "USD",
+      (account) => account.currency === "USD",
   );
   const usdcAccount = this.accounts.find(
-    (account) => account.currency === "USDC",
+      (account) => account.currency === "USDC",
   );
-  const { available_balance: usdAvailableBalance, hold: usdHoldBalance } =
-    usdAccount;
-  const { available_balance: usdcAvailableBalance, hold: usdcHoldBalance } =
-    usdcAccount;
+  const {available_balance: usdAvailableBalance, hold: usdHoldBalance} =
+      usdAccount;
+  const {available_balance: usdcAvailableBalance, hold: usdcHoldBalance} =
+      usdcAccount;
   const usdAvailable = parseFloat(usdAvailableBalance.value);
   const usdcAvailable = parseFloat(usdcAvailableBalance.value);
   const usdHold = parseFloat(usdHoldBalance.value);
@@ -95,9 +94,9 @@ const getTotalValue = () => {
   const totalCash = usdAvailable + usdcAvailable + usdHold + usdcHold;
 
   const totalCryptoValue = tradeAccounts.reduce((acc, account) => {
-    const { ask, bid } = this.getBestBidAskPrice(account);
+    const {ask, bid} = this.getBestBidAskPrice(account);
     const mid = (ask + bid) / 2;
-    const { available_balance, hold } = account;
+    const {available_balance, hold} = account;
     const holdValue = parseFloat(hold.value);
     const availableCrypto = parseFloat(available_balance.value);
     const totalAccountCrypto = availableCrypto + holdValue;
@@ -106,9 +105,9 @@ const getTotalValue = () => {
 
   // Get available crypto value
   const totalCryptoAvailable = tradeAccounts.reduce((acc, account) => {
-    const { ask, bid } = this.getBestBidAskPrice(account);
+    const {ask, bid} = this.getBestBidAskPrice(account);
     const mid = (ask + bid) / 2;
-    const { available_balance } = account;
+    const {available_balance} = account;
     const availableCrypto = parseFloat(available_balance.value);
     return acc + availableCrypto * mid;
   }, 0);
@@ -131,5 +130,16 @@ onResultSuccessGlobalLongPolling((res: any) => {
   renderAccountOrderList(res.data);
   renderAccountInfo(res.data);
   pageAvailable.value = true;
+
+  setTimeout(() => {
+    executeGlobalLongPolling({
+      data: {
+        accountCurrency: "BTC",
+      },
+    });
+  }, 15000);
+
 });
+
+
 </script>
