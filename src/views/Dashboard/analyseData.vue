@@ -13,7 +13,7 @@
               :value="item"
             >
               <template v-slot:prepend>
-                <v-icon :icon="'fa-thin fa-spinner fa-spin'"></v-icon>
+                <v-icon :icon="'fa-thin fa-arrow-trend-down'"></v-icon>
               </template>
 
               <v-list-item-title class="_text-green-400 !_text-sm ">
@@ -36,7 +36,7 @@
               color="primary"
             >
               <template v-slot:prepend>
-                <v-icon :icon="'fa-thin fa-user'"></v-icon>
+                <v-icon :icon="'fa-thin fa-arrow-trend-up'"></v-icon>
               </template>
 
               <v-list-item-title class="_text-red-500 !_text-sm">

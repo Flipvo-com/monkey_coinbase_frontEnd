@@ -49,8 +49,8 @@ const routes:CustomRouteRecordRaw[]= [
             name: 'register',
             __auth: false
         },
-            redirect: {name: 'login'},
-        // component: () => import('@/views/RegisterView.vue')
+        // redirect: {name: 'login'},
+        component: () => import('@/views/RegisterView.vue')
     },
     {
         path: '/dashboard',
