@@ -7,8 +7,8 @@ import {
 } from 'vue-router'
 import Login from '@/views/LoginView.vue'
 
-import middlewareRegistry from '../../src/router/middleware/core/middlewareRegistry'
-import {middlewarePipeline, parseMiddleware} from '@/router/middleware/core/middlewarePipeline';
+import middlewareRegistry from '@/plugins/middlewares/core/middlewareRegistry'
+import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/middlewarePipeline';
 
 // Define custom meta properties
 export interface CustomRouteMeta {
