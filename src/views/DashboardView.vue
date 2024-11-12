@@ -20,8 +20,12 @@ import TopBar from "@/components/common/TopBar.vue";
 import LoadingProgress from "@/components/common/LoadingProgress.vue";
 import DashboardRouteView from "@/components/dashboard/dashboardRouteView.vue";
 
-const { accountOrderList, renderAccountOrderList, renderAccountInfo } =
-  AccountState();
+const {
+  accountOrderList,
+  allJsonData,
+  renderAccountOrderList,
+  renderAccountInfo,
+} = AccountState();
 
 const dashboardRoute: RouteRecordRaw = router.options.routes.find(
   (route) => route.name === "dashboard",
@@ -31,6 +35,10 @@ const dashboardChildren: Ref<UnwrapRef<RouteRecordRaw>[]> = ref(
 );
 
 const pageAvailable = ref(false);
+
+const renderAllJsonData = (res: any) => {
+  allJsonData.value = res.allJson;
+};
 
 dashboardChildren.value =
   dashboardRoute?.children!.filter((i: RouteRecordRaw) => {
@@ -122,11 +130,13 @@ const getTotalValue = () => {
 //
 
 onResultSuccessGlobalLongPolling((res) => {
+  console.log(res);
   accountOrderList.value = res.data;
-  pageAvailable.value = true;
+
+  renderAllJsonData(res.data);
   renderAccountOrderList(res.data);
   renderAccountInfo(res.data);
-
+  pageAvailable.value = true;
   setTimeout(() => {
     executeGlobalLongPolling({
       data: {

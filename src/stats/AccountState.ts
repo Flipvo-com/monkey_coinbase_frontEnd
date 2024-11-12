@@ -4,17 +4,18 @@ import { ref, type Ref } from "vue";
 export const AccountState = createGlobalState(() => {
   const accountOrderList: Ref<AccountOrderModel[]> = ref([]);
   const accountInfo: Ref<AccountInfo> = ref({} as AccountInfo);
+  const allJsonData: Ref<AllJsonData> = ref({} as AllJsonData);
   const renderAccountOrderList = (data: any) => {
     accountOrderList.value = data?.accountOrders ?? [];
   };
-    const renderAccountInfo = (data: any) => {
+  const renderAccountInfo = (data: any) => {
     accountInfo.value = data?.accountInfo ?? {};
-    }
-  
-  
+  };
+
   return {
     accountOrderList,
     accountInfo,
+    allJsonData,
     renderAccountOrderList,
     renderAccountInfo,
   };
@@ -105,4 +106,12 @@ export interface AccountOrderModel {
     | {
         // Define properties here if attached_order_configuration is not null
       };
+}
+
+export interface AllJsonData {
+  accounts: AccountInfo[];
+
+  [key: string]: any;
+
+  pricebooks: [any];
 }
