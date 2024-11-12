@@ -1,84 +1,83 @@
 <template>
+
+  <v-container
+      class="mb-2"
+      style="padding: 0;" fluid>
+    <v-row>
+      <!-- Bitcoin Account Card -->
+      <v-col cols="12" md="4" class="mb-0">
+        <v-card style="border: 1px solid #7a7a7a;">
+          <v-card-text style="padding: 0;">
+            <v-list lines="one">
+              <v-list-item>
+                <v-list-item-title class="flex items-center mb-3">
+                  <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl mr-2"></i>
+                  <span class="_text-3xl">Bitcoin</span>
+                  <span class="float-right _text-2xl _text-blue-400 ml-auto">{{ toCurrency(btcPrice) }}</span>
+                </v-list-item-title>
+                <v-list-item-subtitle class="mb-2 _text-blue-300">
+                  <span class="float-right">Total Value: {{ totalBtcValue }}</span>
+                  <div>₿ 💰 {{ totalBtc }}</div>
+                </v-list-item-subtitle>
+                <v-list-item-subtitle class="_text-3xl mb-2">
+                  <span class="_text-green-300">₿ 🟢 Available: {{ btcAvailable }}</span>
+                  <div class="_text-red-200 float-right">🛑 Hold: {{ btcHold }}</div>
+                </v-list-item-subtitle>
+                <v-list-item-subtitle class="_text-3xl">
+                  <span class="_text-green-300">₿ 💲 Value: {{ btcAvailableValue }}</span>
+                  <div class="_text-red-200 float-right">💲 Value: {{ btcHoldValue }}</div>
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <!-- Cash Account Card -->
+      <v-col cols="12" md="4">
+        <v-card style="border: 1px solid #7a7a7a;">
+          <v-card-text style="padding: 0;">
+            <v-list lines="one">
+              <v-list-item>
+                <v-list-item-title class="flex items-center mb-3">
+                  <span class="_text-3xl mr-2">💵 Cash</span>
+                  <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalCashValue }}</span>
+                </v-list-item-title>
+                <v-list-item-subtitle class="_text-3xl mb-2">
+                  <span class="_text-green-300">🟢 Available: {{ cashAvailableValue }}</span>
+                  <div class="_text-red-200 float-right">🛑 Hold: {{ cashHoldValue }}</div>
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+
+      <!-- USDC Account Card -->
+      <v-col cols="12" md="4">
+        <v-card style="border: 1px solid #7a7a7a;">
+          <v-card-text style="padding: 0;">
+            <v-list lines="one">
+              <v-list-item>
+                <v-list-item-title class="flex items-center mb-3">
+                  <span class="display-inline _text-3xl mr-2">
+                    <img src="/public/usd-coin-usdc-logo.svg" class="_w-8 _h-8 mr-2 d-inline-block" alt="USDC"> USDC
+                  </span>
+                  <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalUsdcValue }}</span>
+                </v-list-item-title>
+                <v-list-item-subtitle class="_text-3xl mb-2">
+                  <span class="_text-green-300">🟢 Available: {{ usdcAvailableValue }}</span>
+                  <div class="_text-red-200 float-right">🛑 Hold: {{ usdcHoldValue }}</div>
+                </v-list-item-subtitle>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
+
   <div class="_flex _flex-wrap _gap-2">
-    <!-- Account Summary Cards -->
-    <v-card class="_w-full">
-      <v-card-text style="padding: 0;">
-        <v-list lines="one">
-          <v-list-item>
-            <!-- Main Bitcoin Header with Price -->
-            <v-list-item-title class="flex items-center mb-3">
-              <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl mr-2"></i>
-              <span class="_text-3xl">Bitcoin</span>
-              <span class="float-right _text-2xl _text-blue-400 ml-auto">{{ toCurrency(btcPrice) }}</span>
-            </v-list-item-title>
-
-            <!-- Total Bitcoin Value and Amount -->
-            <v-list-item-subtitle class="mb-2 _text-blue-300">
-              <span class="float-right">Total Value: {{ totalBtcValue }}</span>
-              <div>₿ 💰 {{ totalBtc }}</div>
-            </v-list-item-subtitle>
-
-            <!-- Available and Hold Bitcoin -->
-            <v-list-item-subtitle class="_text-3xl mb-2">
-              <span class="_text-green-300">₿ 🟢 Available: {{ btcAvailable }}</span>
-              <div class="_text-red-200 float-right">🛑 Hold: {{ btcHold }}</div>
-            </v-list-item-subtitle>
-
-            <!-- Available and Hold Values -->
-            <v-list-item-subtitle class="_text-3xl">
-              <span class="_text-green-300">₿ 💲 Value: {{ btcAvailableValue }}</span>
-              <div class="_text-red-200 float-right">💲 Value: {{ btcHoldValue }}</div>
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-
-    <!-- Cash Account -->
-    <v-card class="_w-full">
-      <v-card-text style="padding: 0;">
-        <v-list lines="one">
-          <v-list-item>
-            <!-- Main Cash Header with Total -->
-            <v-list-item-title class="flex items-center mb-3">
-              <span class="_text-3xl mr-2">💵 Cash</span>
-              <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalCashValue }}</span>
-            </v-list-item-title>
-
-            <!-- Available and Hold Cash -->
-            <v-list-item-subtitle class="_text-3xl mb-2">
-              <span class="_text-green-300">🟢 Available: {{ cashAvailableValue }}</span>
-              <div class="_text-red-200 float-right">🛑 Hold: {{ cashHoldValue }}</div>
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-
-    <!-- USDC Account -->
-    <v-card class="_w-full">
-      <v-card-text style="padding: 0;">
-        <v-list lines="one">
-          <v-list-item>
-            <!-- Main USDC Header with Total -->
-            <v-list-item-title class="flex items-center mb-3">
-              <span class="display-inline _text-3xl mr-2">
-                <img src="/public/usd-coin-usdc-logo.svg"
-                     class="_w-8 _h-8 mr-2 d-inline-block"
-                     alt="USDC"> USDC
-              </span>
-              <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalUsdcValue }}</span>
-            </v-list-item-title>
-            <!-- Available and Hold USDC -->
-            <v-list-item-subtitle class="_text-3xl mb-2">
-              <span class="_text-green-300">🟢 Available: {{ usdcAvailableValue }}</span>
-              <div class="_text-red-200 float-right">🛑 Hold: {{ usdcHoldValue }}</div>
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-
     <!-- BTC Price Card -->
     <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
       <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
@@ -92,7 +91,7 @@
       </v-card-text>
     </v-card>
 
-
+    <!-- todo - Need to convert all this stuff to better looking data    -->
     <v-card>
       <v-card-text>
         <div>
@@ -234,7 +233,6 @@
         </v-card-text>
       </v-card>
     </div>
-
   </div>
 </template>
 
@@ -325,6 +323,7 @@ const usdcAvailableValue = computed(() => {
 const usdcHoldValue = computed(() => {
   return toCurrency(usdcHold.value);
 });
+
 
 // Computed properties for accounts and prices
 const accounts = computed(() => coinbaseState.value.accounts || []);
