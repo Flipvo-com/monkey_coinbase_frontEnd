@@ -13,7 +13,7 @@ import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/mi
 
 // Define custom meta properties
 export interface CustomRouteMeta {
-    name?: string;
+	name?: string;
 }
 export interface MiddlewareContext {
     to: RouteLocationNormalized;
@@ -25,127 +25,153 @@ export interface MiddlewareContext {
 
 // Create a custom type for routes with custom meta
 export  type CustomRouteRecordRaw = RouteRecordRaw & {
-    meta?: CustomRouteMeta;
+	meta?: CustomRouteMeta;
 };
 
-const routes:CustomRouteRecordRaw[]= [
+const routes: CustomRouteRecordRaw[] = [
+	{
+		path: '/',
+		name: 'home',
+		meta: {
+			name: 'home',
+			__auth: false
+		},
+		redirect: {name: 'login'},
+		// component: HomeView,
+		// children:undefined
+	},
+	{
+		path: '/login',
+		name: 'login',
+		meta: {
+			name: 'login',
+			__auth: false
+		},
+		component: () => import('@/views/LoginView.vue')
+	},
+	{
+		path: '/register',
+		name: 'register',
+		meta: {
+			name: 'register',
+			__auth: false
+		},
+		// redirect: {name: 'login'},
+		component: () => import('@/views/RegisterView.vue')
+	},
+	{
+		path: '/dashboard',
+		name: 'dashboard',
+		meta: {
+			name: 'dashboard',
+			middleware: ['auth']
+		},
+		redirect: {name: 'dashboardIndex'},
+		component: () => import('@/views/DashboardView.vue'),
+		children: [
+			{
+				path: 'index',
+				name: 'dashboardIndex',
+				meta: {
+					name: 'Home',
+					icon: 'fa-duotone fa-home',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/dashboardIndex.vue')
+				}
+			},
 
-    {
-        path: '/',
-        name: 'home',
-        meta: {
-            name: 'home',
-            __auth: false
-        },
-            redirect: {name: 'login'},
-        // component: HomeView,
-        // children:undefined
-    },
-    {
-        path: '/login',
-        name: 'login',
-        meta: {
-            name: 'login',
-            __auth: false
-        },
-        component: ()=> import('@/views/LoginView.vue')
-    },
-    {
-        path: '/register',
-        name: 'register',
-        meta: {
-            name: 'register',
-            __auth: false
-        },
-        // redirect: {name: 'login'},
-        component: () => import('@/views/RegisterView.vue')
-    },
-    {
-        path: '/dashboard',
-        name: 'dashboard',
-        meta: {
-            name: 'dashboard',
-            middleware: ['auth']
-        },
-        redirect: {name: 'dashboardIndex'},
-        component: () => import('@/views/DashboardView.vue'),
-        children: [
-            {
-                path: 'index',
-                name: 'dashboardIndex',
-                meta: {
-                    name: 'Home',
-                    icon:'fa-duotone fa-home',
-                    __auth: true
-                },
-                components: {
-                    dashboard:() => import('@/views/Dashboard/dashboardIndex.vue')
-                }
-            },
-            {
-                path: 'analyse',
-                name: 'analyse',
-                meta: {
-                    name: 'Analyse',
-                    icon:'fa-duotone fa-chart-line',
-                    __auth: true
-                },
-                components: {
-                    dashboard:() => import('@/views/Dashboard/analyseData.vue')
-                }
-            },
-            // {
-            //     path:'documents',
-            //     name:'documents',
-            //     meta:{
-            //         name:'documents',
-            //         __auth:true
-            //     },
-            //     components:{
-            //         dashboard:{
-            //             template:'<h1>Documents</h1>'
-            //         }
-            //     }
-            // }
-        ]
-    },
+			{
+				path: 'analyse',
+				name: 'analyse',
+				meta: {
+					name: 'Analyse',
+					icon: 'fa-duotone fa-chart-line',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/analyseData.vue')
+				}
+			},
+
+			{
+				path: 'dashboard-settings',
+				name: 'dashboardSettings',
+				meta: {
+					name: 'Dashboard',
+					icon: 'fa-duotone fa-tachometer-alt',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/DashboardSettings.vue')
+				}
+			},
+
+			{
+				path: 'insights',
+				name: 'insights',
+				meta: {
+					name: 'Insights',
+					icon: 'fa-duotone fa-lightbulb',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/InsightsView.vue')
+				}
+			},
+
+			{
+				path: 'settings',
+				name: 'userSettings',
+				meta: {
+					name: 'Settings',
+					icon: 'fa-duotone fa-cog',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/UserSettings.vue')
+				}
+			},
+		]
+	},
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
+	history: createWebHistory(),
+	routes
 })
 
 router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next) => {
-    // If no middleware is specified, proceed to the route
-    // console.log('to', to)
-    if (!to.meta.middleware) {
-        return next();
-    }
+	// If no middleware is specified, proceed to the route
+	// console.log('to', to)
+	if (!to.meta.middleware) {
+		return next();
+	}
 
-    // Parse and prepare middleware functions
-    const middleware = (to.meta.middleware as string[]).map((middlewareWithParams) => {
-        const {name, parsedParams} = parseMiddleware(middlewareWithParams);
-        const middlewareFunction = middlewareRegistry[name];
+	// Parse and prepare middleware functions
+	const middleware = (to.meta.middleware as string[]).map((middlewareWithParams) => {
+		const {name, parsedParams} = parseMiddleware(middlewareWithParams);
+		const middlewareFunction = middlewareRegistry[name];
 
-        if (!middlewareFunction) {
-            // Fallback middleware that simply calls `next`
-            return (context: any) => context.next();
-        }
-        // Return middleware function wrapped with context
-        return (context: any) => middlewareFunction({...context, params: parsedParams});
-    });
+		if (!middlewareFunction) {
+			// Fallback middleware that simply calls `next`
+			return (context: any) => context.next();
+		}
+		// Return middleware function wrapped with context
+		return (context: any) => middlewareFunction({...context, params: parsedParams});
+	});
 
-    const context = {
-        to,
-        next: () => Promise.resolve(), // Ensure next is a Promise-returning function
-        from,
-        router
-    };
+	const context = {
+		to,
+		next: () => Promise.resolve(), // Ensure next is a Promise-returning function
+		from,
+		router
+	};
 
-    // Execute middleware pipeline
-    return middlewarePipeline(context, middleware, 0)
-        .then(() => next()) // Continue navigation if all middleware passed
-        .catch(() => next(false)); // Abort navigation if any middleware fails
+	// Execute middleware pipeline
+	return middlewarePipeline(context, middleware, 0)
+		.then(() => next()) // Continue navigation if all middleware passed
+		.catch(() => next(false)); // Abort navigation if any middleware fails
 });
 export default router
