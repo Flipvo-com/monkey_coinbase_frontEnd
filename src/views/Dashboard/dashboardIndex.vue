@@ -1,32 +1,5 @@
 <template>
   <div class="_flex _flex-wrap _gap-2">
-    <div class="user-settings-layout flex flex-wrap gap-4">
-
-      <!-- Account Summary Cards -->
-      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
-        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
-        </v-card-title>
-        <v-card-text>
-          <p>Available Balance: {{ toCurrency(account.available_balance.value, account.currency) }}</p>
-          <p>Hold: {{ toCurrency(account.hold.value, account.currency) }}</p>
-          <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value), account.currency) }}</p>
-        </v-card-text>
-      </v-card>
-
-      <!-- BTC Price Card -->
-      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
-        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
-        </v-card-title>
-        <v-card-text>
-          <p>Bid Price: {{ btcBidPrice }}</p>
-          <p>Ask Price: {{ btcAskPrice }}</p>
-          <p>Average Price: {{ btcAveragePrice }}</p>
-        </v-card-text>
-      </v-card>
-
-    </div>
 
     <v-card class="_w-full">
       <v-card-text class="">
@@ -53,7 +26,6 @@
         </v-list>
       </v-card-text>
     </v-card>
-
     <v-card class="_w-full">
       <v-card-text class=" ">
         <v-list lines="one">
@@ -70,6 +42,40 @@
         </v-list>
       </v-card-text>
     </v-card>
+
+
+
+
+    <!-- Account Summary Cards -->
+    <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
+      <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+        <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
+      </v-card-title>
+      <v-card-text>
+        <p>Available Balance: {{ toCurrency(account.available_balance.value) }}</p>
+        <p>Hold: {{ toCurrency(account.hold.value) }}</p>
+        <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value)) }}</p>
+      </v-card-text>
+    </v-card>
+
+
+
+    <!-- BTC Price Card -->
+    <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
+      <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+        <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
+      </v-card-title>
+      <v-card-text>
+        <p>Bid Price: {{ btcBidPrice }}</p>
+        <p>Ask Price: {{ btcAskPrice }}</p>
+        <p>Average Price: {{ btcAveragePrice }}</p>
+      </v-card-text>
+    </v-card>
+
+
+
+
+
 
     <v-card>
       <v-card-text>
@@ -184,6 +190,32 @@
       </v-card-text>
     </v-card>
 
+    <div class="user-settings-layout flex flex-wrap gap-4">
+      <!-- Account Summary Cards -->
+      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
+        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+          <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
+        </v-card-title>
+        <v-card-text>
+          <p>Available Balance: {{ toCurrency(account.available_balance.value) }}</p>
+          <p>Hold: {{ toCurrency(account.hold.value) }}</p>
+          <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value)) }}</p>
+        </v-card-text>
+      </v-card>
+
+      <!-- BTC Price Card -->
+      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
+        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+          <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
+        </v-card-title>
+        <v-card-text>
+          <p>Bid Price: {{ btcBidPrice }}</p>
+          <p>Ask Price: {{ btcAskPrice }}</p>
+          <p>Average Price: {{ btcAveragePrice }}</p>
+        </v-card-text>
+      </v-card>
+    </div>
+
   </div>
 </template>
 
@@ -213,12 +245,12 @@ const btcPrice = computed(() => {
 const accounts = computed(() => coinbaseState.value.accounts || []);
 
 const btcBidPrice = computed(() => {
-  const btcPriceBook = coinbaseState.value.pricebooks.find(book => book.product_id === "BTC-USD");
+  const btcPriceBook = coinbaseState.value.pricebooks.find((book:any) => book.product_id === "BTC-USD");
   return btcPriceBook ? parseFloat(btcPriceBook.bids[0].price).toFixed(2) : "N/A";
 });
 
 const btcAskPrice = computed(() => {
-  const btcPriceBook = coinbaseState.value.pricebooks.find(book => book.product_id === "BTC-USD");
+  const btcPriceBook = coinbaseState.value.pricebooks.find((book:any) => book.product_id === "BTC-USD");
   return btcPriceBook ? parseFloat(btcPriceBook.asks[0].price).toFixed(2) : "N/A";
 });
 
@@ -229,9 +261,9 @@ const btcAveragePrice = computed(() => {
 });
 
 const openOrders = computed(() => {
-  return coinbaseState.value.accounts.flatMap(account => account.orders || [])
-      .filter(order => order.status === "OPEN")
-      .map(order => ({
+  return coinbaseState.value.accounts.flatMap((account:any) => account.orders || [])
+      .filter((order:any) => order.status === "OPEN")
+      .map((order:any) => ({
         side: order.side,
         price: order.order_configuration.limit_limit_gtc.limit_price,
         size: order.order_configuration.limit_limit_gtc.base_size,
