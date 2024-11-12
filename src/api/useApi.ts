@@ -5,7 +5,6 @@ import {createEventHook, whenever} from "@vueuse/core";
 import {toastFromResponse} from "@/stats/Utils";
 import {loginState} from "@/stats/loginState";
 
-
 export interface APIError {
     code: number;
     message: string;
@@ -40,6 +39,7 @@ export const apiInstance = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     headers: headers
 });
+
 apiInstance.interceptors.request.use(
     async (config) => {
         // Fetch the CSRF token
