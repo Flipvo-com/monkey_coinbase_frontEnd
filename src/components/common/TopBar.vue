@@ -1,8 +1,8 @@
-
 <template>
     <v-toolbar :title="routeTitle"></v-toolbar>
 </template>
 <script setup lang="ts">
+
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import type {CustomRouteMeta} from "@/router";

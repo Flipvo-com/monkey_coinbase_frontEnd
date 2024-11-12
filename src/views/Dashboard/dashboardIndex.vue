@@ -46,53 +46,53 @@
       <v-card-text>
         <div>
           📈 Profit/Loss --- 🪙 Crypto Summary ---
-          <br />
+          <br/>
           Gross: $429.43 | Net: $348.44 | %Gross: 2.76% | %Net: 2.23% ---
           Bought: 0.224326 | Sold: 0.230504 | Position: -0.006178 | Avg Buy:
           $69,394.61 | Avg Sell: $69,397.64
-          <br />
+          <br/>
           📊 Profit/Loss Summary: todo - double check!!
-          <br />
+          <br/>
           💸 Total Buy Value: $15,567.02 | Total Buy Fees: $40.10 | Total Buy
           Cost: $15,607.12
-          <br />
+          <br/>
           📜 Total Sell Value: $15,996.44 | Total Sell Fees: $40.89 | Total Sell
           Proceeds: $15,955.56
-          <br />
+          <br/>
           📈 Profit/Loss:
-          <br />
+          <br/>
           📉 Gross Profit/Loss: $429.43 | Net Profit/Loss: $348.44
-          <br />
+          <br/>
           📉 Gross Profit/Loss %: 2.76% | Net Profit/Loss %: 2.23%
-          <br />
+          <br/>
           🪙 Crypto Summary:
-          <br />
+          <br/>
           📥 Total Crypto Bought: 0.224326 | 📤 Total Crypto Sold: 0.230504 | 📊
           Net Crypto Position (traded): -0.006178 | 📈 Status: DOWN
-          <br />
+          <br/>
           🔄 Average Buy Price: $69,394.61 | Average Sell Price: $69,397.64 |
           Avg Fee per Trade: $0.02
-          <br />
+          <br/>
           🔄 Average Sell Price: $69,397.64
-          <br />
+          <br/>
           --- Diff: $3.03 (0.00%) 🔄 Average Buy Price: $69,394.61
-          <br />
+          <br/>
 
           📉 Holdings Summary:
-          <br />
+          <br/>
           💰 Current Holdings Value (Trade-Based): -$546.21
-          <br />
+          <br/>
           📈 Unrealized P/L: -$117.48
-          <br />
+          <br/>
           💸 Realized P/L: $465.93 | Holdings/Buy Ratio: -2.75%
-          <br />
+          <br/>
 
           🌕 BTC Wallet 🛡️0.00149848 💰 $132.48 🪙 🔒 🛡️0.00014762 💰 $13.05
-          <br />
+          <br/>
           ⚖️ Balance: Buys(72) - %71.29 / %28.71 - (29)Sells - Total: 101
-          <br />
+          <br/>
           💲 $130.87 ♻️ %49.69 🚧 %50.31 ♻️ $132.48 🛡️
-          <br />
+          <br/>
           💰 Total: $263.35
         </div>
       </v-card-text>
@@ -113,11 +113,11 @@
               {{ buyOrder.length }}
               ({{
                 buyOrder.length + sellOrder.length > 0
-                  ? (
-                      (buyOrder.length / (buyOrder.length + sellOrder.length)) *
-                      100
+                    ? (
+                        (buyOrder.length / (buyOrder.length + sellOrder.length)) *
+                        100
                     ).toFixed(2)
-                  : 0
+                    : 0
               }}%)
             </v-list-item-subtitle>
           </v-list-item>
@@ -134,12 +134,12 @@
               {{ sellOrder.length }}
               ({{
                 sellOrder.length + buyOrder.length > 0
-                  ? (
-                      (sellOrder.length /
-                        (sellOrder.length + buyOrder.length)) *
-                      100
+                    ? (
+                        (sellOrder.length /
+                            (sellOrder.length + buyOrder.length)) *
+                        100
                     ).toFixed(2)
-                  : 0
+                    : 0
               }}%)
             </v-list-item-subtitle>
           </v-list-item>
@@ -155,16 +155,17 @@
     </v-card>
   </div>
 </template>
-<script setup lang="ts">
-import { toCurrency } from "@/stats/Utils";
-import { computed } from "vue";
-import { AccountState } from "@/stats/AccountState";
 
-const { accountOrderList, accountInfo, allJsonData } = AccountState();
+<script setup lang="ts">
+import {toCurrency} from "@/stats/Utils";
+import {computed} from "vue";
+import {AccountState} from "@/stats/AccountState";
+
+const {accountOrderList, accountInfo, allJsonData} = AccountState();
 
 const btcPrice = computed(() => {
   let BTCBook = allJsonData.value.pricebooks.find(
-    (item) => item.product_id === "BTC-USD",
+      (item) => item.product_id === "BTC-USD",
   );
   let asks = parseFloat(BTCBook?.asks[0].price);
   let bids = parseFloat(BTCBook?.bids[0].price);
@@ -215,20 +216,18 @@ const buyOrder = computed(() => {
 
 const valueBuyOrder = computed(() => {
   return buyOrder.value.reduce((acc, item) => {
-    return (
-      acc +
-      item.order_configuration.limit_limit_gtc.limit_price *
-        item.order_configuration.limit_limit_gtc.base_size
-    );
+    const price = Number(item.order_configuration.limit_limit_gtc.limit_price) || 0;
+    const size = Number(item.order_configuration.limit_limit_gtc.base_size) || 0;
+    return acc + price * size;
   }, 0);
 });
+
 const valueSellOrder = computed(() => {
   return sellOrder.value.reduce((acc, item) => {
-    return (
-      acc +
-      item.order_configuration.limit_limit_gtc.limit_price *
-        item.order_configuration.limit_limit_gtc.base_size
-    );
+    const price = Number(item.order_configuration.limit_limit_gtc.limit_price) || 0;
+    const size = Number(item.order_configuration.limit_limit_gtc.base_size) || 0;
+    return acc + price * size;
   }, 0);
 });
+
 </script>

@@ -1,3 +1,12 @@
+/*
+* Main entry point for the application
+*
+* @package: MonkeyCoinbase
+* @since:   2021-08-27
+* @version: 1.0
+* @description: Main entry point for the application
+* */
+
 import './assets/main.css'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -22,18 +31,17 @@ import "@/assets/css/_icons.css"
 // const VITE_APP_PUSHER_APP_KEY = import.meta.env.VITE_APP_PUSHER_APP_KEY
 // const VITE_APP_PUSHER_APP_CLUSTER = import.meta.env.VITE_APP_PUSHER_APP_CLUSTER
 
-
 const vuetify = createVuetify({
-    components: {
-        VTreeview, VDateInput, ...components,
-    }, directives, icons: {
-        defaultSet: 'fa', aliases, sets: {
-            fa,
-        },
-    },
-    theme: {
-        defaultTheme: 'dark',
-    },
+	components: {
+		VTreeview, VDateInput, ...components,
+	}, directives, icons: {
+		defaultSet: 'fa', aliases, sets: {
+			fa,
+		},
+	},
+	theme: {
+		defaultTheme: 'dark',
+	},
 })
 const app = createApp(App)
 
@@ -49,8 +57,9 @@ app.use(Particles)
 app.use(validationRules)
 
 app.use(Vue3Toastify, {
-    autoClose: 5000, position: 'bottom-right',
+	autoClose: 5000, position: 'bottom-right',
 } as ToastContainerOptions);
+
 app.use(canGoToPlugin)
 app.directive('isRole', isRole);
 app.use(router)
