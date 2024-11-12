@@ -3,7 +3,8 @@ import {
     createWebHistory,
     // type  NavigationGuardNext,
     type RouteLocationNormalized,
-    type RouteRecordRaw
+    type RouteRecordRaw,
+    type Router
 } from 'vue-router'
 import Login from '@/views/LoginView.vue'
 
@@ -13,6 +14,13 @@ import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/mi
 // Define custom meta properties
 export interface CustomRouteMeta {
     name?: string;
+}
+export interface MiddlewareContext {
+    to: RouteLocationNormalized;
+    from: RouteLocationNormalized;
+    next: () => Promise<void>; // Ensure next is a Promise-returning function
+    router: Router;
+    params?: string[];
 }
 
 // Create a custom type for routes with custom meta

@@ -1,3 +1,4 @@
+import azeaze from '@/router/middleware/azeaze';
 import auth from "@/router/middleware/auth";
 import guest from '@/router/middleware/guest';
 
@@ -5,6 +6,8 @@ import guest from '@/router/middleware/guest';
 const middlewareRegistry: { [key: string]: Function } = {
     auth,
     guest,
+azeaze,
+
 };
 
 export default middlewareRegistry;
