@@ -74,6 +74,7 @@ const routes:CustomRouteRecordRaw[]= [
                     dashboard:() => import('@/views/Dashboard/dashboardIndex.vue')
                 }
             },
+
             {
                 path: 'analyse',
                 name: 'analyse',
@@ -86,19 +87,46 @@ const routes:CustomRouteRecordRaw[]= [
                     dashboard:() => import('@/views/Dashboard/analyseData.vue')
                 }
             },
-            // {
-            //     path:'documents',
-            //     name:'documents',
-            //     meta:{
-            //         name:'documents',
-            //         __auth:true
-            //     },
-            //     components:{
-            //         dashboard:{
-            //             template:'<h1>Documents</h1>'
-            //         }
-            //     }
-            // }
+
+            {
+                path: 'orders',
+                name: 'orders',
+                meta: {
+                    name: 'Orders',
+                    icon:'fa-duotone fa-shopping-cart',
+                    __auth: true
+                },
+                components: {
+                    dashboard:() => import('@/views/Dashboard/OrdersView.vue')
+                }
+            },
+
+            {
+                path: 'dashboard-settings',
+                name: 'dashboardSettings',
+                meta: {
+                    name: 'Dashboard',
+                    icon: 'fa-duotone fa-tachometer-alt',
+                    __auth: true
+                },
+                components: {
+                    dashboard: () => import('@/views/Dashboard/DashboardSettings.vue')
+                }
+            },
+
+            {
+                path: 'settings',
+                name: 'userSettings',
+                meta: {
+                    name: 'Settings',
+                    icon: 'fa-duotone fa-cog',
+                    __auth: true
+                },
+                components: {
+                    dashboard: () => import('@/views/Dashboard/UserSettings.vue')
+                }
+            },
+
         ]
     },
 ]

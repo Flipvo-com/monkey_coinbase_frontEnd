@@ -59,6 +59,7 @@ onResultSuccessGlobalLongPolling((res: any) => {
   console.log('-----------------');
   console.log(res);
   console.log(res.data);
+  console.log(res.data);
 
   accountOrderList.value = res.data;
   renderAllJsonData(res.data);
