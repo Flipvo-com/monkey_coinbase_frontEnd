@@ -8,11 +8,30 @@
 import {ref, type Ref} from "vue";
 import {createGlobalState} from "@vueuse/core";
 
+import { reactive } from "vue";
+
+// todo - How reactive works?
+// https://v3.vuejs.org/guide/reactivity-fundamentals.html#how-reactivity-works
+// - The reactive function creates a reactive proxy of the object passed to it.
+
+// const state = reactive({
+// 	accountOrderList: [] as AccountOrderModel[],
+// 	accountInfo: {} as AccountInfo,
+// 	allJsonData: {} as AllJsonData,
+// 	coinbaseState: {}
+// });
+
+
 export const AccountState = createGlobalState(() => {
 	const accountOrderList: Ref<AccountOrderModel[]> = ref([]);
 	const accountInfo: Ref<AccountInfo> = ref({} as AccountInfo);
 	const allJsonData: Ref<AllJsonData> = ref({} as AllJsonData);
 	const coinbaseState: Ref<any> = ref({});
+
+	const usdAccount = ref({} as AccountInfo);
+	const usdcAccount = ref({} as AccountInfo);
+	const btcAccount = ref({} as AccountInfo);
+
 
 	const renderCoinbaseState = (data: any) => {
 		coinbaseState.value = data?.coinbaseState ?? {};
@@ -26,14 +45,30 @@ export const AccountState = createGlobalState(() => {
 		accountInfo.value = data?.accountInfo ?? {};
 	};
 
+	const updateAccountState = (data: any) => {
+		if (data.coinbaseState) coinbaseState.value = data.coinbaseState;
+		if (data.accountOrders) accountOrderList.value = data.accountOrders;
+		if (data.accountInfo) accountInfo.value = data.accountInfo;
+
+		if (coinbaseState.value) {
+			usdAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USD") ?? {};
+			usdcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USDC") ?? {};
+			btcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "BTC") ?? {};
+		}
+	};
+
 	return {
 		coinbaseState,
+		usdAccount,
+		usdcAccount,
+		btcAccount,
 		accountOrderList,
 		accountInfo,
 		allJsonData,
 		renderCoinbaseState,
 		renderAccountOrderList,
 		renderAccountInfo,
+		updateAccountState
 	};
 });
 
@@ -127,6 +162,5 @@ export interface AccountOrderModel {
 export interface AllJsonData {
 	accounts: AccountInfo[];
 	pricebooks: [any];
-
 	[key: string]: any;
 }

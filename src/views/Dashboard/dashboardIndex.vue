@@ -1,69 +1,89 @@
 <template>
   <div class="_flex _flex-wrap _gap-2">
-
+    <!-- Account Summary Cards -->
     <v-card class="_w-full">
-      <v-card-text class="">
-        <v-list lines="one" class="">
-          <v-list-item>
-            <v-list-item-title class="mb-3">
-              <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl"></i>
-              Bitcoin
-              <div class="float-right">Price: {{ toCurrency(btcPrice) }}</div>
-            </v-list-item-title>
-            <v-list-item-title class="mb-3">
-              <div>
-                <div class="float-right">
-                  Total Value: {{ toCurrency(3000) }}
-                </div>
-                ₿ {{ 0.12345678 }}
-              </div>
-            </v-list-item-title>
-            <v-list-item-subtitle class="_text-green-500 _text-3xl">
-              🟢 Available: {{ toCurrency(3000) }}
-              <div class="float-right">🛑 Hold: {{ toCurrency(3000) }}</div>
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-    <v-card class="_w-full">
-      <v-card-text class=" ">
+      <v-card-text style="padding: 0;">
         <v-list lines="one">
           <v-list-item>
-            <v-list-item-title class="mb-3">
-              💵 Cash
-              <div class="float-right">Total: {{ toCurrency(90000) }}</div>
+            <!-- Main Bitcoin Header with Price -->
+            <v-list-item-title class="flex items-center mb-3">
+              <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl mr-2"></i>
+              <span class="_text-3xl">Bitcoin</span>
+              <span class="float-right _text-2xl _text-blue-400 ml-auto">{{ toCurrency(btcPrice) }}</span>
             </v-list-item-title>
-            <v-list-item-subtitle class="_text-green-500 _text-3xl">
-              🟢 Available: {{ toCurrency(3000) }}
-              <div class="float-right">🛑 Hold: {{ toCurrency(3000) }}</div>
+
+            <!-- Total Bitcoin Value and Amount -->
+            <v-list-item-subtitle class="mb-2 _text-blue-300">
+              <span class="float-right">Total Value: {{ totalBtcValue }}</span>
+              <div>₿ 💰 {{ totalBtc }}</div>
+            </v-list-item-subtitle>
+
+            <!-- Available and Hold Bitcoin -->
+            <v-list-item-subtitle class="_text-3xl mb-2">
+              <span class="_text-green-300">₿ 🟢 Available: {{ btcAvailable }}</span>
+              <div class="_text-red-200 float-right">🛑 Hold: {{ btcHold }}</div>
+            </v-list-item-subtitle>
+
+            <!-- Available and Hold Values -->
+            <v-list-item-subtitle class="_text-3xl">
+              <span class="_text-green-300">₿ 💲 Value: {{ btcAvailableValue }}</span>
+              <div class="_text-red-200 float-right">💲 Value: {{ btcHoldValue }}</div>
             </v-list-item-subtitle>
           </v-list-item>
         </v-list>
       </v-card-text>
     </v-card>
 
+    <!-- Cash Account -->
+    <v-card class="_w-full">
+      <v-card-text style="padding: 0;">
+        <v-list lines="one">
+          <v-list-item>
+            <!-- Main Cash Header with Total -->
+            <v-list-item-title class="flex items-center mb-3">
+              <span class="_text-3xl mr-2">💵 Cash</span>
+              <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalCashValue }}</span>
+            </v-list-item-title>
 
-
-
-    <!-- Account Summary Cards -->
-    <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
-      <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-        <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
-      </v-card-title>
-      <v-card-text>
-        <p>Available Balance: {{ toCurrency(account.available_balance.value) }}</p>
-        <p>Hold: {{ toCurrency(account.hold.value) }}</p>
-        <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value)) }}</p>
+            <!-- Available and Hold Cash -->
+            <v-list-item-subtitle class="_text-3xl mb-2">
+              <span class="_text-green-300">🟢 Available: {{ cashAvailableValue }}</span>
+              <div class="_text-red-200 float-right">🛑 Hold: {{ cashHoldValue }}</div>
+            </v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
       </v-card-text>
     </v-card>
 
-
+    <!-- USDC Account -->
+    <v-card class="_w-full">
+      <v-card-text style="padding: 0;">
+        <v-list lines="one">
+          <v-list-item>
+            <!-- Main USDC Header with Total -->
+            <v-list-item-title class="flex items-center mb-3">
+              <span class="display-inline _text-3xl mr-2">
+                <img src="/public/usd-coin-usdc-logo.svg"
+                     class="_w-8 _h-8 mr-2 d-inline-block"
+                     alt="USDC"> USDC
+              </span>
+              <span class="float-right _text-2xl _text-blue-400 ml-auto">Total: {{ totalUsdcValue }}</span>
+            </v-list-item-title>
+            <!-- Available and Hold USDC -->
+            <v-list-item-subtitle class="_text-3xl mb-2">
+              <span class="_text-green-300">🟢 Available: {{ usdcAvailableValue }}</span>
+              <div class="_text-red-200 float-right">🛑 Hold: {{ usdcHoldValue }}</div>
+            </v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
 
     <!-- BTC Price Card -->
     <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
       <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-        <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
+        <v-icon class="mr-2">mdi-currency-btc</v-icon>
+        BTC Price
       </v-card-title>
       <v-card-text>
         <p>Bid Price: {{ btcBidPrice }}</p>
@@ -71,10 +91,6 @@
         <p>Average Price: {{ btcAveragePrice }}</p>
       </v-card-text>
     </v-card>
-
-
-
-
 
 
     <v-card>
@@ -192,9 +208,11 @@
 
     <div class="user-settings-layout flex flex-wrap gap-4">
       <!-- Account Summary Cards -->
-      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
+      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md"
+              v-for="account in accounts" :key="account.uuid">
         <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
+          <v-icon class="mr-2">mdi-wallet</v-icon>
+          {{ account.name }}
         </v-card-title>
         <v-card-text>
           <p>Available Balance: {{ toCurrency(account.available_balance.value) }}</p>
@@ -206,7 +224,8 @@
       <!-- BTC Price Card -->
       <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
         <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
+          <v-icon class="mr-2">mdi-currency-btc</v-icon>
+          BTC Price
         </v-card-title>
         <v-card-text>
           <p>Bid Price: {{ btcBidPrice }}</p>
@@ -224,13 +243,16 @@ import {toCurrency} from "@/stats/Utils";
 import {computed} from "vue";
 import {AccountState} from "@/stats/AccountState";
 
-const {accountOrderList, accountInfo, coinbaseState} = AccountState();
+const {
+  accountOrderList, accountInfo, coinbaseState,
+  usdAccount, usdcAccount, btcAccount
+} = AccountState();
 
 const btcPrice = computed(() => {
-  let BTCBook = coinbaseState.value.pricebooks.find((item:{
+  let BTCBook = coinbaseState.value.pricebooks.find((item: {
     product_id: string;
-    asks: {price: string}[];
-    bids: {price: string}[];
+    asks: { price: string }[];
+    bids: { price: string }[];
   }) => item.product_id === "BTC-USD");
   if (!BTCBook) {
     return 0;
@@ -241,16 +263,79 @@ const btcPrice = computed(() => {
   return (asks + bids) / 2;
 });
 
+// Bitcoin Account
+const totalBtc = computed(() => {
+  // return parseFloat(accountInfo.value.available_balance.value) + parseFloat(accountInfo.value.hold.value);
+  return Number((btcAvailable.value + btcHold.value).toFixed(8));
+});
+const btcAvailable = computed(() => {
+  return Number(parseFloat(btcAccount.value.available_balance.value).toFixed(8));
+});
+const btcHold = computed(() => {
+  return Number(parseFloat(btcAccount.value.hold.value).toFixed(8));
+});
+// Bitcoin Account Values
+const totalBtcValue = computed(() => {
+  return toCurrency(Number((totalBtc.value * btcPrice.value).toFixed(2)));
+});
+const btcAvailableValue = computed(() => {
+  return toCurrency(Number((btcAvailable.value * btcPrice.value).toFixed(2)));
+});
+const btcHoldValue = computed(() => {
+  return toCurrency(Number((btcHold.value * btcPrice.value).toFixed(2)));
+});
+
+// Cash Account
+const totalCash = computed(() => {
+  return parseFloat(usdAccount.value.available_balance.value) + parseFloat(usdAccount.value.hold.value);
+});
+const cashAvailable = computed(() => {
+  return parseFloat(usdAccount.value.available_balance.value);
+});
+const cashHold = computed(() => {
+  return parseFloat(usdAccount.value.hold.value);
+});
+// Cash Account Values
+const totalCashValue = computed(() => {
+  return toCurrency(totalCash.value);
+});
+const cashAvailableValue = computed(() => {
+  return toCurrency(cashAvailable.value);
+});
+const cashHoldValue = computed(() => {
+  return toCurrency(cashHold.value);
+});
+
+// USDC Account
+const usdcAvailable = computed(() => {
+  return parseFloat(usdcAccount.value.available_balance.value);
+});
+const usdcHold = computed(() => {
+  return parseFloat(usdcAccount.value.hold.value);
+});
+const totalUsdc = computed(() => {
+  return parseFloat(usdcAccount.value.available_balance.value) + parseFloat(usdcAccount.value.hold.value);
+});
+const totalUsdcValue = computed(() => {
+  return toCurrency(totalUsdc.value);
+});
+const usdcAvailableValue = computed(() => {
+  return toCurrency(usdcAvailable.value);
+});
+const usdcHoldValue = computed(() => {
+  return toCurrency(usdcHold.value);
+});
+
 // Computed properties for accounts and prices
 const accounts = computed(() => coinbaseState.value.accounts || []);
 
 const btcBidPrice = computed(() => {
-  const btcPriceBook = coinbaseState.value.pricebooks.find((book:any) => book.product_id === "BTC-USD");
+  const btcPriceBook = coinbaseState.value.pricebooks.find((book: any) => book.product_id === "BTC-USD");
   return btcPriceBook ? parseFloat(btcPriceBook.bids[0].price).toFixed(2) : "N/A";
 });
 
 const btcAskPrice = computed(() => {
-  const btcPriceBook = coinbaseState.value.pricebooks.find((book:any) => book.product_id === "BTC-USD");
+  const btcPriceBook = coinbaseState.value.pricebooks.find((book: any) => book.product_id === "BTC-USD");
   return btcPriceBook ? parseFloat(btcPriceBook.asks[0].price).toFixed(2) : "N/A";
 });
 
@@ -260,55 +345,8 @@ const btcAveragePrice = computed(() => {
   return (bid && ask) ? ((bid + ask) / 2).toFixed(2) : "N/A";
 });
 
-const openOrders = computed(() => {
-  return coinbaseState.value.accounts.flatMap((account:any) => account.orders || [])
-      .filter((order:any) => order.status === "OPEN")
-      .map((order:any) => ({
-        side: order.side,
-        price: order.order_configuration.limit_limit_gtc.limit_price,
-        size: order.order_configuration.limit_limit_gtc.base_size,
-      }));
-});
-
-const coinState = computed(() => {
-  return coinbaseState.value || {};
-});
-
-// const btcAvailable = computed(() => {
-//   parseFloat(accountInfo.value.hold.value);
-// });
-
-const btcHold = parseFloat(accountInfo.value.hold.value);
-// const btcTotal = btcAvailable + btcHold;
-// const btcAvailableUsdValue = parseFloat((btcAvailable * btcPrice.value).toFixed(2));
-// const btcHoldUsdValue = parseFloat((btcHold*btcPrice.value).toFixed(2));
-
 const sellOrder = computed(() => {
   return accountOrderList.value.filter((item) => item.side === "SELL");
-});
-
-const TotalBitcoin = computed(() => {
-  let a = accountInfo.value.available_balance.value;
-  let b = accountInfo.value.hold.value;
-  // console.log(a, b, parseFloat(a) + parseFloat(b));
-  return (parseFloat(a) + parseFloat(b)).toFixed(8);
-});
-
-const getBTCTotalToUSD = computed(() => {
-  console.log(accountInfo.value);
-  let av = parseFloat(accountInfo.value.available_balance.value);
-  let hold = parseFloat(accountInfo.value.hold.value);
-  return ((av + hold) * btcPrice.value).toFixed(2);
-});
-
-const getBTCAvailableToUSD = computed(() => {
-  let av = parseFloat(accountInfo.value.available_balance.value);
-  return (av * btcPrice.value).toFixed(2);
-});
-
-const getBTCHoldToUSD = computed(() => {
-  let hold = parseFloat(accountInfo.value.hold.value);
-  return (hold * btcPrice.value).toFixed(2);
 });
 
 const buyOrder = computed(() => {
@@ -329,6 +367,16 @@ const valueSellOrder = computed(() => {
     const size = Number(item.order_configuration.limit_limit_gtc.base_size) || 0;
     return acc + price * size;
   }, 0);
+});
+
+const openOrders = computed(() => {
+  return coinbaseState.value.accounts.flatMap((account: any) => account.orders || [])
+      .filter((order: any) => order.status === "OPEN")
+      .map((order: any) => ({
+        side: order.side,
+        price: order.order_configuration.limit_limit_gtc.limit_price,
+        size: order.order_configuration.limit_limit_gtc.base_size,
+      }));
 });
 
 </script>

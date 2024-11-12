@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="pageAvailable">
-<!--    <top-bar/>-->
+    <!--    <top-bar/>-->
     <DashboardRouteView/>
     <BottomBar/>
   </v-app>
@@ -15,19 +15,10 @@ import {type Ref, ref, type UnwrapRef} from "vue";
 import {AccountState} from "@/stats/AccountState";
 import {executeGlobalLongPolling, onResultSuccessGlobalLongPolling,} from "@/api/useLongPolling";
 import BottomBar from "@/components/common/BottomBar.vue";
-import TopBar from "@/components/common/TopBar.vue";
 import LoadingProgress from "@/components/common/LoadingProgress.vue";
 import DashboardRouteView from "@/components/dashboard/dashboardRouteView.vue";
 
-const {
-  coinbaseState,
-  accountOrderList,
-  accountInfo,
-  allJsonData,
-  renderCoinbaseState,
-  renderAccountOrderList,
-  renderAccountInfo
-} = AccountState();
+const {allJsonData, updateAccountState} = AccountState();
 
 const dashboardRoute: RouteRecordRaw = router.options.routes.find(
     (route) => route.name === "dashboard",
@@ -64,13 +55,13 @@ onResultSuccessGlobalLongPolling((res: any) => {
   console.log(res.data);
   console.log('-----------------');
 
-  accountOrderList.value = res.data;
+  // accountOrderList.value = res.data;
+  // renderAllJsonData(res.data);
+  // renderAccountInfo(res.data);
+  // renderAccountOrderList(res.data);
+  // renderCoinbaseState(res.data);
 
-  renderAllJsonData(res.data);
-  renderAccountInfo(res.data);
-  renderAccountOrderList(res.data);
-  renderCoinbaseState(res.data);
-
+  updateAccountState(res.data);
   pageAvailable.value = true;
 });
 
