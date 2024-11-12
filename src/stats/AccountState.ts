@@ -12,6 +12,11 @@ export const AccountState = createGlobalState(() => {
 	const accountOrderList: Ref<AccountOrderModel[]> = ref([]);
 	const accountInfo: Ref<AccountInfo> = ref({} as AccountInfo);
 	const allJsonData: Ref<AllJsonData> = ref({} as AllJsonData);
+	const coinbaseState: Ref<any> = ref({});
+
+	const renderCoinbaseState = (data: any) => {
+		coinbaseState.value = data?.coinbaseState ?? {};
+	};
 
 	const renderAccountOrderList = (data: any) => {
 		accountOrderList.value = data?.accountOrders ?? [];
@@ -22,9 +27,11 @@ export const AccountState = createGlobalState(() => {
 	};
 
 	return {
+		coinbaseState,
 		accountOrderList,
 		accountInfo,
 		allJsonData,
+		renderCoinbaseState,
 		renderAccountOrderList,
 		renderAccountInfo,
 	};
@@ -120,5 +127,6 @@ export interface AccountOrderModel {
 export interface AllJsonData {
 	accounts: AccountInfo[];
 	pricebooks: [any];
+
 	[key: string]: any;
 }

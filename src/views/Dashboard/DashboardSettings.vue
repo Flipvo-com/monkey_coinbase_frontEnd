@@ -1,4 +1,140 @@
 <template>
+  <div class="dashboard-layout _flex _flex-wrap _gap-4 _mb-2">
+
+    <!-- Account Balance Card -->
+    <v-card class="_w-full md:_w-1/3 lg:_w-1/3 bg-blue-100">
+      <v-card-title class="text-blue-700 font-semibold">
+        <i class="fa-solid fa-wallet mr-2"></i>Account Balance
+      </v-card-title>
+      <v-card-text class="text-center">
+        <div class="text-3xl font-bold text-blue-900">$12,345.67</div>
+        <div class="text-sm text-blue-600 mt-1">Last updated: 5 minutes ago</div>
+      </v-card-text>
+    </v-card>
+
+    <!-- Portfolio Summary Card -->
+    <v-card class="_w-full md:_w-1/2 lg:_w-1/4 bg-green-100">
+      <v-card-title class="text-green-700 font-semibold">
+        <i class="fa-solid fa-chart-pie mr-2"></i>Portfolio Summary
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Bitcoin</span>
+              <span class="font-semibold">$5,000.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="_text-green-500 text-xs">+2.3%</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Ethereum</span>
+              <span class="font-semibold">$3,000.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="_text-red-500 text-xs">-1.8%</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Litecoin</span>
+              <span class="font-semibold">$1,200.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="_text-green-500 text-xs">+4.1%</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Recent Transactions Card -->
+    <v-card class="_w-full md:_w-1/2 lg:_w-1/4 bg-purple-100">
+      <v-card-title class="text-purple-700 font-semibold">
+        <i class="fa-solid fa-exchange-alt mr-2"></i>Recent Transactions
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Buy Bitcoin</span>
+              <span class="text-xs text-purple-500">Completed</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $500</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Sell Ethereum</span>
+              <span class="text-xs text-purple-500">Pending</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $300</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Buy Litecoin</span>
+              <span class="text-xs text-purple-500">Completed</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $200</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Performance Summary Card -->
+    <v-card class="_w-full md:_w-1/2 lg:_w-1/4 bg-yellow-100">
+      <v-card-title class="text-yellow-700 font-semibold">
+        <i class="fa-solid fa-chart-line mr-2"></i>Performance Summary
+      </v-card-title>
+      <v-card-text>
+        <div class="text-lg font-semibold text-yellow-800">Profit/Loss</div>
+        <p class="text-2xl font-bold text-green-600">$1,234.56 (+5.2%)</p>
+        <div class="mt-3 text-sm">
+          <div>Monthly Return: <span class="text-green-500 font-bold">+8.3%</span></div>
+          <div>Yearly Return: <span class="text-green-500 font-bold">+15.6%</span></div>
+        </div>
+      </v-card-text>
+    </v-card>
+
+    <!-- Alerts Card -->
+    <v-card class="_w-full md:_w-1/2 lg:_w-1/3 bg-red-100">
+      <v-card-title class="text-red-700 font-semibold">
+        <i class="fa-solid fa-bell mr-2"></i>Alerts
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Bitcoin reached $60,000</span>
+              <span class="text-xs text-red-500">3 hrs ago</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Ethereum down 5%</span>
+              <span class="text-xs text-red-500">1 day ago</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Portfolio up 10%</span>
+              <span class="text-xs text-red-500">2 days ago</span>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Market Overview Card -->
+    <v-card class="_w-full md:_w-1/2 lg:_w-1/3 bg-gray-100">
+      <v-card-title class="text-gray-700 font-semibold">
+        <i class="fa-solid fa-globe mr-2"></i>Market Overview
+      </v-card-title>
+      <v-card-text>
+        <div>Bitcoin: <span class="font-semibold">$55,000</span></div>
+        <div>Ethereum: <span class="font-semibold">$3,500</span></div>
+        <div>Litecoin: <span class="font-semibold">$180</span></div>
+        <div class="text-xs text-gray-500 mt-1">Updated every 15 minutes</div>
+      </v-card-text>
+    </v-card>
+  </div>
+
+  <!-- Other examples  -->
   <div class="dashboard-layout _flex _flex-wrap _gap-4">
     <!-- Account Balance Card -->
     <v-card class="_w-full md:_w-1/2 lg:_w-1/3">
@@ -119,7 +255,144 @@
       </v-card-text>
     </v-card>
   </div>
+
+  <!-- More examples  -->
+  <div class="dashboard-layout flex flex-wrap gap-4">
+    <!-- Account Balance Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/4 bg-blue-50 shadow-md">
+      <v-card-title class="text-blue-700 font-semibold">
+        <v-icon class="mr-2">mdi-wallet</v-icon>Account Balance
+      </v-card-title>
+      <v-card-text class="text-center">
+        <div class="text-3xl font-bold text-blue-900">$12,345.67</div>
+        <div class="text-sm text-blue-600 mt-1">Last updated: 5 minutes ago</div>
+      </v-card-text>
+    </v-card>
+
+    <!-- Portfolio Summary Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/4 bg-green-50 shadow-md">
+      <v-card-title class="text-green-700 font-semibold">
+        <v-icon class="mr-2">mdi-chart-pie</v-icon>Portfolio Summary
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Bitcoin</span>
+              <span class="font-semibold">$5,000.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-green-600 text-xs">+2.3%</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Ethereum</span>
+              <span class="font-semibold">$3,000.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-red-500 text-xs">-1.8%</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Litecoin</span>
+              <span class="font-semibold">$1,200.00</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-green-600 text-xs">+4.1%</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Recent Transactions Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/4 bg-purple-50 shadow-md">
+      <v-card-title class="text-purple-700 font-semibold">
+        <v-icon class="mr-2">mdi-swap-horizontal</v-icon>Recent Transactions
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Buy Bitcoin</span>
+              <span class="text-xs text-purple-500">Completed</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $500</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Sell Ethereum</span>
+              <span class="text-xs text-purple-500">Pending</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $300</v-list-item-subtitle>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Buy Litecoin</span>
+              <span class="text-xs text-purple-500">Completed</span>
+            </v-list-item-title>
+            <v-list-item-subtitle class="text-xs">Amount: $200</v-list-item-subtitle>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Performance Summary Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/4 bg-yellow-50 shadow-md">
+      <v-card-title class="text-yellow-700 font-semibold">
+        <v-icon class="mr-2">mdi-trending-up</v-icon>Performance Summary
+      </v-card-title>
+      <v-card-text>
+        <div class="text-lg font-semibold text-yellow-800">Profit/Loss</div>
+        <p class="text-2xl font-bold text-green-600">$1,234.56 (+5.2%)</p>
+        <div class="mt-3 text-sm">
+          <div>Monthly Return: <span class="text-green-500 font-bold">+8.3%</span></div>
+          <div>Yearly Return: <span class="text-green-500 font-bold">+15.6%</span></div>
+        </div>
+      </v-card-text>
+    </v-card>
+
+    <!-- Alerts Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/3 bg-red-50 shadow-md">
+      <v-card-title class="text-red-700 font-semibold">
+        <v-icon class="mr-2">mdi-bell-alert</v-icon>Alerts
+      </v-card-title>
+      <v-card-text>
+        <v-list dense>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Bitcoin reached $60,000</span>
+              <span class="text-xs text-red-500">3 hrs ago</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Ethereum down 5%</span>
+              <span class="text-xs text-red-500">1 day ago</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-title class="flex justify-between">
+              <span>Portfolio up 10%</span>
+              <span class="text-xs text-red-500">2 days ago</span>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+    </v-card>
+
+    <!-- Market Overview Card -->
+    <v-card class="w-full md:w-1/2 lg:w-1/3 bg-gray-50 shadow-md">
+      <v-card-title class="text-gray-700 font-semibold">
+        <v-icon class="mr-2">mdi-finance</v-icon>Market Overview
+      </v-card-title>
+      <v-card-text>
+        <div>Bitcoin: <span class="font-semibold">$55,000</span></div>
+        <div>Ethereum: <span class="font-semibold">$3,500</span></div>
+        <div>Litecoin: <span class="font-semibold">$180</span></div>
+        <div class="text-xs text-gray-500 mt-1">Updated every 15 minutes</div>
+      </v-card-text>
+    </v-card>
+  </div>
+
 </template>
 
 <script setup lang="ts">
+
 </script>

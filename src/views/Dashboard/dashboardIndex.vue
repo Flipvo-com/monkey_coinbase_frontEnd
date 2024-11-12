@@ -1,13 +1,41 @@
 <template>
   <div class="_flex _flex-wrap _gap-2">
+    <div class="user-settings-layout flex flex-wrap gap-4">
+
+      <!-- Account Summary Cards -->
+      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md" v-for="account in accounts" :key="account.uuid">
+        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+          <v-icon class="mr-2">mdi-wallet</v-icon>{{ account.name }}
+        </v-card-title>
+        <v-card-text>
+          <p>Available Balance: {{ toCurrency(account.available_balance.value, account.currency) }}</p>
+          <p>Hold: {{ toCurrency(account.hold.value, account.currency) }}</p>
+          <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value), account.currency) }}</p>
+        </v-card-text>
+      </v-card>
+
+      <!-- BTC Price Card -->
+      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
+        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
+          <v-icon class="mr-2">mdi-currency-btc</v-icon>BTC Price
+        </v-card-title>
+        <v-card-text>
+          <p>Bid Price: {{ btcBidPrice }}</p>
+          <p>Ask Price: {{ btcAskPrice }}</p>
+          <p>Average Price: {{ btcAveragePrice }}</p>
+        </v-card-text>
+      </v-card>
+
+    </div>
+
     <v-card class="_w-full">
-      <v-card-text class=" ">
-        <v-list lines="one">
+      <v-card-text class="">
+        <v-list lines="one" class="">
           <v-list-item>
             <v-list-item-title class="mb-3">
               <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl"></i>
               Bitcoin
-              <div class="float-right">Price: {{ toCurrency(90000) }}</div>
+              <div class="float-right">Price: {{ toCurrency(btcPrice) }}</div>
             </v-list-item-title>
             <v-list-item-title class="mb-3">
               <div>
@@ -42,6 +70,7 @@
         </v-list>
       </v-card-text>
     </v-card>
+
     <v-card>
       <v-card-text>
         <div>
@@ -97,6 +126,7 @@
         </div>
       </v-card-text>
     </v-card>
+
     <v-card class="_w-full" density="compact">
       <v-card-text class="_overflow-scroll _max-h-[400px]">
         <v-list lines="one">
@@ -153,6 +183,7 @@
         </v-list>
       </v-card-text>
     </v-card>
+
   </div>
 </template>
 
@@ -161,16 +192,54 @@ import {toCurrency} from "@/stats/Utils";
 import {computed} from "vue";
 import {AccountState} from "@/stats/AccountState";
 
-const {accountOrderList, accountInfo, allJsonData} = AccountState();
+const {accountOrderList, accountInfo, coinbaseState} = AccountState();
 
 const btcPrice = computed(() => {
-  let BTCBook = allJsonData.value.pricebooks.find(
-      (item) => item.product_id === "BTC-USD",
-  );
+  let BTCBook = coinbaseState.value.pricebooks.find((item:{
+    product_id: string;
+    asks: {price: string}[];
+    bids: {price: string}[];
+  }) => item.product_id === "BTC-USD");
+  if (!BTCBook) {
+    return 0;
+  }
+
   let asks = parseFloat(BTCBook?.asks[0].price);
   let bids = parseFloat(BTCBook?.bids[0].price);
-
   return (asks + bids) / 2;
+});
+
+// Computed properties for accounts and prices
+const accounts = computed(() => coinbaseState.value.accounts || []);
+
+const btcBidPrice = computed(() => {
+  const btcPriceBook = coinbaseState.value.pricebooks.find(book => book.product_id === "BTC-USD");
+  return btcPriceBook ? parseFloat(btcPriceBook.bids[0].price).toFixed(2) : "N/A";
+});
+
+const btcAskPrice = computed(() => {
+  const btcPriceBook = coinbaseState.value.pricebooks.find(book => book.product_id === "BTC-USD");
+  return btcPriceBook ? parseFloat(btcPriceBook.asks[0].price).toFixed(2) : "N/A";
+});
+
+const btcAveragePrice = computed(() => {
+  const bid = parseFloat(btcBidPrice.value);
+  const ask = parseFloat(btcAskPrice.value);
+  return (bid && ask) ? ((bid + ask) / 2).toFixed(2) : "N/A";
+});
+
+const openOrders = computed(() => {
+  return coinbaseState.value.accounts.flatMap(account => account.orders || [])
+      .filter(order => order.status === "OPEN")
+      .map(order => ({
+        side: order.side,
+        price: order.order_configuration.limit_limit_gtc.limit_price,
+        size: order.order_configuration.limit_limit_gtc.base_size,
+      }));
+});
+
+const coinState = computed(() => {
+  return coinbaseState.value || {};
 });
 
 // const btcAvailable = computed(() => {

@@ -59,14 +59,29 @@
       </v-card-text>
     </v-card>
 
-    <!-- Save Button -->
+    <!-- Coming Soon Message -->
+    <div v-if="showMessage" class="w-full text-center mt-4 text-lg font-semibold text-blue-500">
+      Coming Soon
+    </div>
+
+    <!-- Save Button and Coming Soon Message -->
     <div class="w-full flex justify-end mt-4">
-      <v-btn color="primary" class="text-white">Save Changes
-      </v-btn>
+      <v-btn color="primary" class="text-white" @click="showComingSoon">Save Changes</v-btn>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 
+// Reactive state to control message visibility
+const showMessage = ref(false)
+
+// Function to show the "Coming Soon" message for 5 seconds
+const showComingSoon = () => {
+  showMessage.value = true
+  setTimeout(() => {
+    showMessage.value = false
+  }, 5000)
+}
 </script>

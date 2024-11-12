@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="pageAvailable">
-    <top-bar/>
+<!--    <top-bar/>-->
     <DashboardRouteView/>
     <BottomBar/>
   </v-app>
@@ -20,10 +20,13 @@ import LoadingProgress from "@/components/common/LoadingProgress.vue";
 import DashboardRouteView from "@/components/dashboard/dashboardRouteView.vue";
 
 const {
+  coinbaseState,
   accountOrderList,
+  accountInfo,
   allJsonData,
+  renderCoinbaseState,
   renderAccountOrderList,
-  renderAccountInfo,
+  renderAccountInfo
 } = AccountState();
 
 const dashboardRoute: RouteRecordRaw = router.options.routes.find(
@@ -59,12 +62,15 @@ onResultSuccessGlobalLongPolling((res: any) => {
   console.log('-----------------');
   console.log(res);
   console.log(res.data);
-  console.log(res.data);
+  console.log('-----------------');
 
   accountOrderList.value = res.data;
+
   renderAllJsonData(res.data);
-  renderAccountOrderList(res.data);
   renderAccountInfo(res.data);
+  renderAccountOrderList(res.data);
+  renderCoinbaseState(res.data);
+
   pageAvailable.value = true;
 });
 
