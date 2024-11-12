@@ -7,10 +7,10 @@
   <LoadingProgress v-else />
 </template>
 <script setup lang="ts">
-import { type Ref, ref, type UnwrapRef } from "vue";
-import type { RouteRecordRaw } from "vue-router";
-import { AccountState } from "@/stats/AccountState";
 import router from "@/router";
+import type { RouteRecordRaw } from "vue-router";
+import { type Ref, ref, type UnwrapRef } from "vue";
+import { AccountState } from "@/stats/AccountState";
 import {
   executeGlobalLongPolling,
   onResultSuccessGlobalLongPolling,
@@ -30,6 +30,7 @@ const {
 const dashboardRoute: RouteRecordRaw = router.options.routes.find(
   (route) => route.name === "dashboard",
 ) as RouteRecordRaw;
+
 const dashboardChildren: Ref<UnwrapRef<RouteRecordRaw>[]> = ref(
   dashboardRoute?.children || [],
 );
@@ -59,10 +60,23 @@ executeGlobalLongPolling({
  * Get total value of all accounts
  * @returns {{totalCash: number, totalAccountValue: *, totalCryptoAvailable: *, totalCryptoValue: *}}
 
-
-
+ tim 50% - $500
+ admin 50% - $500
+ total = $1000
+ --------------------------
+ total = $1,132.23
+ ----------------------------
+ tim - 50% * $1,200 - $600 + $200 = $800
+ admin - 50% * $1,200 - $600
+ total - $1,400
+ (800/1400) *100 = 57.14
+ (600/1400) *100 = 42.85
  */
 const getTotalValue = () => {
+  if (this === undefined) {
+    return;
+  }
+
   const tradeAccounts = this.getTradeAccounts();
   const usdAccount = this.accounts.find(
     (account) => account.currency === "USD",
@@ -109,9 +123,7 @@ const getTotalValue = () => {
   };
 };
 
-//
-
-onResultSuccessGlobalLongPolling((res) => {
+onResultSuccessGlobalLongPolling((res: any) => {
   console.log(res);
   accountOrderList.value = res.data;
 
@@ -119,12 +131,5 @@ onResultSuccessGlobalLongPolling((res) => {
   renderAccountOrderList(res.data);
   renderAccountInfo(res.data);
   pageAvailable.value = true;
-  setTimeout(() => {
-    executeGlobalLongPolling({
-      data: {
-        accountCurrency: "BTC",
-      },
-    });
-  }, 15000);
 });
 </script>
