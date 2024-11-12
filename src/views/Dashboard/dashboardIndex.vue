@@ -92,61 +92,9 @@
     </v-card>
 
     <!-- todo - Need to convert all this stuff to better looking data    -->
-    <v-card>
-      <v-card-text>
-        <div>
-          📈 Profit/Loss --- 🪙 Crypto Summary ---
-          <br/>
-          Gross: $429.43 | Net: $348.44 | %Gross: 2.76% | %Net: 2.23% ---
-          Bought: 0.224326 | Sold: 0.230504 | Position: -0.006178 | Avg Buy:
-          $69,394.61 | Avg Sell: $69,397.64
-          <br/>
-          📊 Profit/Loss Summary: todo - double check!!
-          <br/>
-          💸 Total Buy Value: $15,567.02 | Total Buy Fees: $40.10 | Total Buy
-          Cost: $15,607.12
-          <br/>
-          📜 Total Sell Value: $15,996.44 | Total Sell Fees: $40.89 | Total Sell
-          Proceeds: $15,955.56
-          <br/>
-          📈 Profit/Loss:
-          <br/>
-          📉 Gross Profit/Loss: $429.43 | Net Profit/Loss: $348.44
-          <br/>
-          📉 Gross Profit/Loss %: 2.76% | Net Profit/Loss %: 2.23%
-          <br/>
-          🪙 Crypto Summary:
-          <br/>
-          📥 Total Crypto Bought: 0.224326 | 📤 Total Crypto Sold: 0.230504 | 📊
-          Net Crypto Position (traded): -0.006178 | 📈 Status: DOWN
-          <br/>
-          🔄 Average Buy Price: $69,394.61 | Average Sell Price: $69,397.64 |
-          Avg Fee per Trade: $0.02
-          <br/>
-          🔄 Average Sell Price: $69,397.64
-          <br/>
-          --- Diff: $3.03 (0.00%) 🔄 Average Buy Price: $69,394.61
-          <br/>
-
-          📉 Holdings Summary:
-          <br/>
-          💰 Current Holdings Value (Trade-Based): -$546.21
-          <br/>
-          📈 Unrealized P/L: -$117.48
-          <br/>
-          💸 Realized P/L: $465.93 | Holdings/Buy Ratio: -2.75%
-          <br/>
-
-          🌕 BTC Wallet 🛡️0.00149848 💰 $132.48 🪙 🔒 🛡️0.00014762 💰 $13.05
-          <br/>
-          ⚖️ Balance: Buys(72) - %71.29 / %28.71 - (29)Sells - Total: 101
-          <br/>
-          💲 $130.87 ♻️ %49.69 🚧 %50.31 ♻️ $132.48 🛡️
-          <br/>
-          💰 Total: $263.35
-        </div>
-      </v-card-text>
-    </v-card>
+    <!-- todo - Need to convert all this stuff to better looking data    -->
+    <!-- todo - Need to convert all this stuff to better looking data    -->
+    <!-- todo - Need to convert all this stuff to better looking data    -->
 
     <v-card class="_w-full" density="compact">
       <v-card-text class="_overflow-scroll _max-h-[400px]">
@@ -233,6 +181,7 @@
         </v-card-text>
       </v-card>
     </div>
+
   </div>
 </template>
 
@@ -242,8 +191,11 @@ import {computed} from "vue";
 import {AccountState} from "@/stats/AccountState";
 
 const {
-  accountOrderList, accountInfo, coinbaseState,
-  usdAccount, usdcAccount, btcAccount
+  accountOrderList,
+  coinbaseState,
+  usdAccount,
+  usdcAccount,
+  btcAccount
 } = AccountState();
 
 const btcPrice = computed(() => {
@@ -323,6 +275,10 @@ const usdcAvailableValue = computed(() => {
 const usdcHoldValue = computed(() => {
   return toCurrency(usdcHold.value);
 });
+
+// todo - Keep working my way down
+// todo - Keep working my way down
+// todo - Keep working my way down
 
 
 // Computed properties for accounts and prices
