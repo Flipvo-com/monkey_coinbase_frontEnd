@@ -46,14 +46,28 @@ export const AccountState = createGlobalState(() => {
 	};
 
 	const updateAccountState = (data: any) => {
-		if (data.coinbaseState) coinbaseState.value = data.coinbaseState;
-		if (data.accountOrders) accountOrderList.value = data.accountOrders;
-		if (data.accountInfo) accountInfo.value = data.accountInfo;
+		console.log("updateAccountState", data);
+		console.log("updateAccountState", data);
 
-		if (coinbaseState.value) {
-			usdAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USD") ?? {};
-			usdcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USDC") ?? {};
-			btcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "BTC") ?? {};
+
+		if (data.coinbaseState) {
+			// todo - too much bullshit, just need state, get rid of this
+			// todo - too much bullshit, just need state
+
+			// todo - this is the old way to do
+			coinbaseState.value = data.coinbaseState;
+			if (data.accountInfo) accountInfo.value = data.accountInfo;
+			if (data.accountOrders) accountOrderList.value = data.accountOrders;
+
+			if (coinbaseState.value) {
+				usdAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USD") ?? {};
+				usdcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "USDC") ?? {};
+				btcAccount.value = coinbaseState.value.accounts.find((account: AccountInfo) => account.currency === "BTC") ?? {};
+			}
+		} else {
+			// todo - this is the new way to do
+			// No data.coinbaseState, I just passed whole file
+			coinbaseState.value = data;
 		}
 	};
 

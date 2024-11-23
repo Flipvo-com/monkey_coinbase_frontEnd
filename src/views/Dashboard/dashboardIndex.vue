@@ -199,6 +199,9 @@ const {
 } = AccountState();
 
 const btcPrice = computed(() => {
+  console.log(coinbaseState.value.pricebooks);
+
+
   let BTCBook = coinbaseState.value.pricebooks.find((item: {
     product_id: string;
     asks: { price: string }[];
