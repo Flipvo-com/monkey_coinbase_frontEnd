@@ -109,7 +109,7 @@ const stateId = setInterval(() => {
         pageAvailable.value = true;
       })
       .catch(error => console.error(error));
-}, 3000);
+}, 25000);
 intervalIds.push(stateId);
 
 // todo - On component unmount, clear all intervals
