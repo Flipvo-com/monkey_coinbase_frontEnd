@@ -9,14 +9,30 @@
 
 <script setup lang="ts">
 
+import axios from "axios";
 import router from "@/router";
 import type {RouteRecordRaw} from "vue-router";
-import {type Ref, ref, type UnwrapRef} from "vue";
+import {onUnmounted, type Ref, ref, type UnwrapRef} from "vue";
+import {loginState} from "@/stats/loginState";
 import {AccountState} from "@/stats/AccountState";
-import {executeGlobalLongPolling, onResultSuccessGlobalLongPolling,} from "@/api/useLongPolling";
 import BottomBar from "@/components/common/BottomBar.vue";
 import LoadingProgress from "@/components/common/LoadingProgress.vue";
 import DashboardRouteView from "@/components/dashboard/dashboardRouteView.vue";
+
+const {loginToken} = loginState();
+
+// Create an Axios instance with the headers
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: {
+    'Authorization': `Bearer ${loginToken.value}`,
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE',
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Access-Control-Allow-Credentials': 'true',
+  },
+});
 
 const {allJsonData, updateAccountState} = AccountState();
 
@@ -43,28 +59,64 @@ dashboardChildren.value =
       }
     }) || [];
 
-executeGlobalLongPolling({
-  data: {
-    accountCurrency: "BTC",
-  },
+// todo - get rid of this crap!!!
+//  - Only calling once cause causes many errors, way to dependant on the data
+// executeGlobalLongPolling({
+//   data: {
+//     accountCurrency: "BTC",
+//   },
+// });
+// onResultSuccessGlobalLongPolling((res: any) => {
+//   console.log('-----------------');
+//   console.log(res);
+//   console.log(res.data);
+//   console.log('-----------------');
+//
+//   // accountOrderList.value = res.data;
+//   // renderAllJsonData(res.data);
+//   // renderAccountInfo(res.data);
+//   // renderAccountOrderList(res.data);
+//   // renderCoinbaseState(res.data);
+//
+//   updateAccountState(res.data);
+//   pageAvailable.value = true;
+// });
+
+apiClient.post('/longPolling')
+    .then((response) => {
+      console.log('-----------------longPolling');
+      console.log(response.data);
+      updateAccountState(response.data);
+      pageAvailable.value = true;
+    })
+    .catch(error => console.error(error));
+
+apiClient.get('/state')
+    .then((response) => {
+      updateAccountState(response.data);
+      pageAvailable.value = true;
+    })
+    .catch(error => console.error(error));
+
+
+const intervalIds: ReturnType<typeof setInterval>[] = []; // Handles both Node.js and browser environments
+const stateId = setInterval(() => {
+  apiClient.get('/state')
+      .then((response) => {
+        console.log('-----------------');
+        console.log(response.data);
+        updateAccountState(response.data);
+        pageAvailable.value = true;
+      })
+      .catch(error => console.error(error));
+}, 3000);
+intervalIds.push(stateId);
+
+// todo - On component unmount, clear all intervals
+// Clear all intervals, on component unmount
+onUnmounted(() => {
+  intervalIds.forEach((id) => clearInterval(id));
 });
-
-onResultSuccessGlobalLongPolling((res: any) => {
-  console.log('-----------------');
-  console.log(res);
-  console.log(res.data);
-  console.log('-----------------');
-
-  // accountOrderList.value = res.data;
-  // renderAllJsonData(res.data);
-  // renderAccountInfo(res.data);
-  // renderAccountOrderList(res.data);
-  // renderCoinbaseState(res.data);
-
-  updateAccountState(res.data);
-  pageAvailable.value = true;
-});
-
 
 /**
  * Get total value of all accounts
