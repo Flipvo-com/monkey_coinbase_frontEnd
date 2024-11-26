@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { Chart } from 'chart.js/auto';
+import {Chart} from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default {
@@ -33,9 +33,9 @@ export default {
             {
               label: 'Crypto Distribution',
               data: [70, 30],
-              backgroundColor: ['#00e676', '#6200ea'], // Neon green and purple for crypto style
+              backgroundColor: ['#002fff', '#0b9f07'], // Dark neon blue for Bitcoin and purple for Cash
               borderColor: '#1e1e2e',
-              borderWidth: 3,
+              borderWidth: 2,
             },
           ],
         },
