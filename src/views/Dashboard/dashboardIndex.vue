@@ -67,7 +67,6 @@
           </v-card-text>
         </v-card>
       </v-col>
-
       <!-- Cash Account Card -->
       <v-col cols="12" md="4" class="mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
@@ -100,7 +99,6 @@
           </v-card-text>
         </v-card>
       </v-col>
-
       <!-- USDC Account Card -->
       <v-col cols="12" md="4" class="mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
@@ -134,14 +132,11 @@
           </v-card-text>
         </v-card>
       </v-col>
-
     </v-row>
   </v-container>
 
-
-
   <!-- Account Summary Cards - todo - buttons -->
-  <div class="text-center">
+  <div class="text-center d-none">
     <div>
       <v-btn
           class="ma-2"
@@ -216,7 +211,7 @@
     </div>
   </div>
   <!--  todo - finish down from here - icon bar-->
-  <div>
+  <div class="d-none">
     <div class="d-flex justify-space-around">
       <v-icon icon="fa:fas fa-lock"></v-icon>
       <v-icon icon="fa:fas fa-search"></v-icon>
