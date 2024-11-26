@@ -8,7 +8,6 @@
       <canvas id="myPieChart"></canvas>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -59,9 +58,9 @@ export default {
 <style scoped>
 #myPieChart {
   width: 100%;
-  max-width: 400px;
   height: auto;
-  max-height: 400px;
+  max-width: 200px;
+  max-height: 200px;
   margin: 0 auto;
 }
 
@@ -69,7 +68,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
   background-color: #1e1e2e;
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
