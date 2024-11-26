@@ -1,6 +1,7 @@
 <template>
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>
+      <!-- Bitcoin Account Card -->
       <v-col cols="12" md="4" class="mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
           <v-card-title class="d-flex align-items-center justify-space-between">
@@ -10,10 +11,9 @@
             </div>
             <span class="_text-blue-400">{{ toCurrency(btcPrice) }}</span>
           </v-card-title>
-
           <v-card-text>
+            <!-- Total BTC -->
             <div class="d-flex justify-space-between mb-3">
-
               <v-tooltip text="Total BTC">
                 <template v-slot:activator="{ props }">
                   <v-btn v-bind="props" style="padding: 0">
@@ -23,7 +23,6 @@
                   </v-btn>
                 </template>
               </v-tooltip>
-
               <v-tooltip text="BTC Value">
                 <template v-slot:activator="{ props }">
                   <v-btn v-bind="props" style="padding: 0">
@@ -33,52 +32,37 @@
                   </v-btn>
                 </template>
               </v-tooltip>
-
             </div>
-
-            <div class="d-flex justify-space-between mb-3">
-              <span class="_text-green-300">₿ {{ btcAvailable }}</span>
-              <span class="_text-red-200">🛑 Hold: {{ btcHold }}</span>
-            </div>
-
-
-            <div class="d-flex justify-space-between align-items-center _text-blue-300 mb-3">
-              <span><strong>Total Value:</strong></span>
-              <span>{{ totalBtcValue }}</span>
-            </div>
-
-            <div class="d-flex justify-space-between mb-3">
-              <span class="_text-green-300">₿ 🟢 Available: {{ btcAvailable }}</span>
-              <span class="_text-red-200">🛑 Hold: {{ btcHold }}</span>
-            </div>
-            <div class="d-flex justify-space-between">
-              <span class="_text-green-300">₿ 💲 Value: {{ btcAvailableValue }}</span>
-              <span class="_text-red-200">💲 Value: {{ btcHoldValue }}</span>
-            </div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-
-      <!-- Bitcoin Account Card -->
-      <v-col cols="12" md="4" class="mb-0">
-        <v-card class="p-0" style="border: 1px solid #7a7a7a;">
-          <v-card-title class="d-flex align-items-center">
-            <i class="fa-brands fa-bitcoin _text-[#ff9933] _text-3xl mr-2"></i>
-            <span class="_text-3xl">Bitcoin</span>
-            <span class="_text-2xl _text-blue-400 ml-auto">{{ toCurrency(btcPrice) }}</span>
-          </v-card-title>
-          <v-card-text>
-            <div class="_text-blue-300 mb-3">
-              <strong>Total Value:</strong> {{ totalBtcValue }}
-              <div>₿ 💰 {{ totalBtc }}</div>
-            </div>
-            <div class="d-flex justify-space-between mb-3">
-              <span class="_text-green-300">₿ 🟢 Available: {{ btcAvailable }}</span>
-              <span class="_text-red-200">🛑 Hold: {{ btcHold }}</span>
-            </div>
-            <div class="d-flex justify-space-between">
-              <span class="_text-green-300">₿ 💲 Value: {{ btcAvailableValue }}</span>
-              <span class="_text-red-200">💲 Value: {{ btcHoldValue }}</span>
+            <!-- Available BTC -->
+            <div class="d-flex justify-space-between mb-0">
+              <div>
+                <!-- Tooltip for Available BTC -->
+                <v-tooltip text="Available BTC">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-green-300">₿ {{ btcAvailable }}</span>
+                  </template>
+                </v-tooltip>
+                <!-- Tooltip for Value of Available BTC -->
+                <v-tooltip text="Value of Available BTC">
+                  <template v-slot:activator="{ props }">
+                    <div v-bind="props" class="_text-green-300">💲 Value: {{ btcAvailableValue }}</div>
+                  </template>
+                </v-tooltip>
+              </div>
+              <div>
+                <!-- Tooltip for BTC on Hold -->
+                <v-tooltip text="BTC on Hold">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-red-200">🛑 Hold: {{ btcHold }}</span>
+                  </template>
+                </v-tooltip>
+                <!-- Tooltip for Value of BTC on Hold -->
+                <v-tooltip text="Value of BTC on Hold">
+                  <template v-slot:activator="{ props }">
+                    <div v-bind="props" class="_text-red-200">💲 Value: {{ btcHoldValue }}</div>
+                  </template>
+                </v-tooltip>
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -86,15 +70,32 @@
 
       <!-- Cash Account Card -->
       <v-col cols="12" md="4" class="mb-0">
-        <v-card style="border: 1px solid #7a7a7a;">
-          <v-card-title class="d-flex align-items-center">
-            <span class="_text-3xl mr-2">💵 Cash</span>
-            <span class="_text-2xl _text-blue-400 ml-auto">Total: {{ totalCashValue }}</span>
+        <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
+          <v-card-title class="d-flex align-items-center justify-space-between">
+            <div class="d-flex align-items-center">
+              <span class="_text-3xl mr-2">💵 Cash</span>
+            </div>
+            <span class="_text-2xl _text-blue-400">Total: {{ totalCashValue }}</span>
           </v-card-title>
           <v-card-text>
-            <div class="d-flex justify-space-between">
-              <span class="_text-green-300">🟢 Available: {{ cashAvailableValue }}</span>
-              <span class="_text-red-200">🛑 Hold: {{ cashHoldValue }}</span>
+            <!-- Available Cash and Cash on Hold with Tooltips -->
+            <div class="d-flex justify-space-between mb-0">
+              <div>
+                <!-- Tooltip for Available Cash -->
+                <v-tooltip text="Available Cash">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-green-300">🟢 Available: {{ cashAvailableValue }}</span>
+                  </template>
+                </v-tooltip>
+              </div>
+              <div>
+                <!-- Tooltip for Cash on Hold -->
+                <v-tooltip text="Cash on Hold">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-red-200">🛑 Hold: {{ cashHoldValue }}</span>
+                  </template>
+                </v-tooltip>
+              </div>
             </div>
           </v-card-text>
         </v-card>
@@ -102,23 +103,44 @@
 
       <!-- USDC Account Card -->
       <v-col cols="12" md="4" class="mb-0">
-        <v-card style="border: 1px solid #7a7a7a;">
-          <v-card-title class="d-flex align-items-center">
-            <img src="/public/usd-coin-usdc-logo.svg" class="_w-8 _h-8 mr-2 d-inline-block" alt="USDC">
-            <span class="_text-3xl">USDC</span>
-            <span class="_text-2xl _text-blue-400 ml-auto">Total: {{ totalUsdcValue }}</span>
+        <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
+          <v-card-title class="d-flex align-items-center justify-space-between">
+            <div class="d-flex align-items-center">
+              <img src="/public/usd-coin-usdc-logo.svg" class="_w-8 _h-8 mr-2 d-inline-block" alt="USDC">
+              <span class="_text-3xl">USDC</span>
+            </div>
+            <span class="_text-2xl _text-blue-400">Total: {{ totalUsdcValue }}</span>
           </v-card-title>
           <v-card-text>
-            <div class="d-flex justify-space-between">
-              <span class="_text-green-300">🟢 Available: {{ usdcAvailableValue }}</span>
-              <span class="_text-red-200">🛑 Hold: {{ usdcHoldValue }}</span>
+            <!-- Available USDC and USDC on Hold with Tooltips -->
+            <div class="d-flex justify-space-between mb-0">
+              <div>
+                <!-- Tooltip for Available USDC -->
+                <v-tooltip text="Available USDC">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-green-300">🟢 Available: {{ usdcAvailableValue }}</span>
+                  </template>
+                </v-tooltip>
+              </div>
+              <div>
+                <!-- Tooltip for USDC on Hold -->
+                <v-tooltip text="USDC on Hold">
+                  <template v-slot:activator="{ props }">
+                    <span v-bind="props" class="_text-red-200">🛑 Hold: {{ usdcHoldValue }}</span>
+                  </template>
+                </v-tooltip>
+              </div>
             </div>
           </v-card-text>
         </v-card>
       </v-col>
+
     </v-row>
   </v-container>
 
+
+
+  <!-- Account Summary Cards - todo - buttons -->
   <div class="text-center">
     <div>
       <v-btn
@@ -153,7 +175,6 @@
         Cancel
       </v-btn>
     </div>
-
     <div>
       <v-btn
           class="ma-2"
@@ -178,7 +199,6 @@
           icon="mdi-cloud-upload"
       ></v-btn>
     </div>
-
     <div>
       <v-btn
           class="ma-2"
@@ -195,138 +215,16 @@
       ></v-btn>
     </div>
   </div>
-
-
-  <v-icon icon="$vuetify"></v-icon>
-  <v-tooltip text="Tooltip">
-    <template v-slot:activator="{ props }">
-      <v-btn v-bind="props">Hover Over Me</v-btn>
-    </template>
-  </v-tooltip>
-
-
+  <!--  todo - finish down from here - icon bar-->
   <div>
     <div class="d-flex justify-space-around">
       <v-icon icon="fa:fas fa-lock"></v-icon>
-
       <v-icon icon="fa:fas fa-search"></v-icon>
-
       <v-icon icon="fa:fas fa-list"></v-icon>
-
       <v-icon icon="fa:fas fa-edit"></v-icon>
-
       <v-icon icon="fa:fas fa-tachometer-alt"></v-icon>
-
       <v-icon icon="fa:fas fa-circle-notch fa-spin"></v-icon>
     </div>
-  </div>
-
-  <!--  todo - finish down from here-->
-  <div class="_flex _flex-wrap _gap-2 d-none">
-    <!-- BTC Price Card -->
-    <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
-      <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-        <v-icon class="mr-2">mdi-currency-btc</v-icon>
-        BTC Price
-      </v-card-title>
-      <v-card-text>
-        <p>Bid Price: {{ btcBidPrice }}</p>
-        <p>Ask Price: {{ btcAskPrice }}</p>
-        <p>Average Price: {{ btcAveragePrice }}</p>
-      </v-card-text>
-    </v-card>
-
-    <!-- todo - Need to convert all this stuff to better looking data    -->
-    <!-- todo - Need to convert all this stuff to better looking data    -->
-    <!-- todo - Need to convert all this stuff to better looking data    -->
-    <!-- todo - Need to convert all this stuff to better looking data    -->
-
-    <v-card class="_w-full" density="compact">
-      <v-card-text class="_overflow-scroll _max-h-[400px]">
-        <v-list lines="one">
-          <v-list-item>
-            <v-list-item-title> Total</v-list-item-title>
-            <v-list-item-subtitle class="_font-bold">
-              {{ toCurrency(3000) }}
-            </v-list-item-subtitle>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>buy Orders</v-list-item-title>
-            <v-list-item-subtitle class="_font-bold">
-              {{ buyOrder.length }}
-              ({{
-                buyOrder.length + sellOrder.length > 0
-                    ? (
-                        (buyOrder.length / (buyOrder.length + sellOrder.length)) *
-                        100
-                    ).toFixed(2)
-                    : 0
-              }}%)
-            </v-list-item-subtitle>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-title>Value buy Orders</v-list-item-title>
-            <v-list-item-subtitle class="_font-bold">
-              {{ valueBuyOrder }}
-            </v-list-item-subtitle>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>sell Orders</v-list-item-title>
-            <v-list-item-subtitle class="_font-bold">
-              {{ sellOrder.length }}
-              ({{
-                sellOrder.length + buyOrder.length > 0
-                    ? (
-                        (sellOrder.length /
-                            (sellOrder.length + buyOrder.length)) *
-                        100
-                    ).toFixed(2)
-                    : 0
-              }}%)
-            </v-list-item-subtitle>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-title>Value sell Orders</v-list-item-title>
-            <v-list-item-subtitle class="_font-bold">
-              {{ valueSellOrder }}
-            </v-list-item-subtitle>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-
-    <div class="user-settings-layout flex flex-wrap gap-4">
-      <!-- Account Summary Cards -->
-      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md"
-              v-for="account in accounts" :key="account.uuid">
-        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-wallet</v-icon>
-          {{ account.name }}
-        </v-card-title>
-        <v-card-text>
-          <p>Available Balance: {{ toCurrency(account.available_balance.value) }}</p>
-          <p>Hold: {{ toCurrency(account.hold.value) }}</p>
-          <p>Total: {{ toCurrency(parseFloat(account.available_balance.value) + parseFloat(account.hold.value)) }}</p>
-        </v-card-text>
-      </v-card>
-
-      <!-- BTC Price Card -->
-      <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
-        <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-          <v-icon class="mr-2">mdi-currency-btc</v-icon>
-          BTC Price
-        </v-card-title>
-        <v-card-text>
-          <p>Bid Price: {{ btcBidPrice }}</p>
-          <p>Ask Price: {{ btcAskPrice }}</p>
-          <p>Average Price: {{ btcAveragePrice }}</p>
-        </v-card-text>
-      </v-card>
-    </div>
-
   </div>
 </template>
 
