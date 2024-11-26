@@ -1,5 +1,13 @@
 <template>
-  <PieChart />
+
+  <PieChart
+      :totalValue="totalAccountUSDValue"
+      :bitcoinValue="totalBtcValue"
+      :cashValue="totalCashValue"
+      :usdcValue="totalUsdcValue"
+      :chartData="[totalBtcValueNumeric, totalCashValueNumeric, totalUsdcValueNumeric]"
+  />
+
 
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>
@@ -257,9 +265,14 @@ const btcPrice = computed(() => {
   return (asks + bids) / 2;
 });
 
+// Total account value: BTC + Cash + USDC
+const totalAccountUSDValue = computed(() => {
+  const btcValue = totalBtc.value * btcPrice.value;
+  return btcValue + totalCash.value + totalUsdc.value;
+});
+
 // Bitcoin Account
 const totalBtc = computed(() => {
-  // return parseFloat(accountInfo.value.available_balance.value) + parseFloat(accountInfo.value.hold.value);
   return Number((btcAvailable.value + btcHold.value).toFixed(8));
 });
 const btcAvailable = computed(() => {
@@ -268,6 +281,7 @@ const btcAvailable = computed(() => {
 const btcHold = computed(() => {
   return Number(parseFloat(btcAccount.value.hold.value).toFixed(8));
 });
+
 // Bitcoin Account Values
 const totalBtcValue = computed(() => {
   return toCurrency(Number((totalBtc.value * btcPrice.value).toFixed(2)));
@@ -278,6 +292,10 @@ const btcAvailableValue = computed(() => {
 const btcHoldValue = computed(() => {
   return toCurrency(Number((btcHold.value * btcPrice.value).toFixed(2)));
 });
+const totalBtcValueNumeric = computed(() => {
+  return Number((totalBtc.value * btcPrice.value).toFixed(2));
+});
+
 
 // Cash Account
 const totalCash = computed(() => {
@@ -299,6 +317,9 @@ const cashAvailableValue = computed(() => {
 const cashHoldValue = computed(() => {
   return toCurrency(cashHold.value);
 });
+const totalCashValueNumeric = computed(() => {
+  return totalCash.value;
+});
 
 // USDC Account
 const usdcAvailable = computed(() => {
@@ -319,6 +340,18 @@ const usdcAvailableValue = computed(() => {
 const usdcHoldValue = computed(() => {
   return toCurrency(usdcHold.value);
 });
+const totalUsdcValueNumeric = computed(() => {
+  return totalUsdc.value;
+});
+
+
+
+// todo  --------
+
+
+
+
+
 
 // todo - Keep working my way down
 // todo - Keep working my way down
