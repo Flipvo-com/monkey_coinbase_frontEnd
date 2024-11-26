@@ -14,7 +14,7 @@
       <v-col cols="12" class="py-1 mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
           <v-card-title>
-            <span class="_text-3xl">👥 Investors</span>
+            <span class="_text-3xl">🗿 Investors</span>
           </v-card-title>
           <v-card-text>
             <v-row>
