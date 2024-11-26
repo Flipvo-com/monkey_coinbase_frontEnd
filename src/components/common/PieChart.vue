@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { Chart } from 'chart.js/auto';
+import {Chart} from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default {
@@ -93,16 +93,18 @@ export default {
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   padding: 6px;
+  margin-bottom: 0.5rem;
 }
 
 .summary-content {
-  flex: 1;
+  flex: 1; /* Allow the summary to take the remaining space */
+  padding-right: 20px; /* Add some space between the summary and the chart */
 }
 
 .chart-container {
-  flex: 2;
+  flex: 0 0 auto; /* Prevent the chart from expanding and keep it fixed */
   display: flex;
-  justify-content: center;
+  justify-content: flex-end; /* Align the chart to the far right */
 }
 
 .total-value {
