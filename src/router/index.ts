@@ -90,7 +90,7 @@ const routes: CustomRouteRecordRaw[] = [
 					__auth: true
 				},
 				components: {
-					dashboard: () => import('@/views/Dashboard/analyseData.vue')
+					dashboard: () => import('@/views/Dashboard/AnalyseData.vue')
 				}
 			},
 			{
