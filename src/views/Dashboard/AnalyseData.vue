@@ -61,6 +61,13 @@ import OrderItem from "@/components/OrderItem.vue"; // Assuming you place this a
 
 const { accountOrderList, coinbaseState } = AccountState();
 
+console.log(accountOrderList.value);
+console.log(coinbaseState.value);
+
+const btcAccount = computed(() => accounts.find((account) => account.currency === "BTC"));
+const btcOrders = btcAccount?.orders || [];
+console.log(btcOrders);
+
 // Computed properties for accounts and prices
 const accounts = computed(() => coinbaseState.value.accounts || []);
 

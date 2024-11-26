@@ -29,7 +29,7 @@ export default {
       required: true,
     },
     bitcoinValue: {
-      type: Number,
+      type: String,
       required: true,
     },
     cashValue: {
