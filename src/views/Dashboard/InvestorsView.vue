@@ -1,6 +1,15 @@
 <template>
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>
+      <!-- Total Account Value -->
+      <v-col cols="12" class="mb-0">
+        <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
+          <v-card-title>
+            <span class="_text-3xl">Total Account Value: {{ toCurrency(totalAccountUSDValue) }}</span>
+          </v-card-title>
+        </v-card>
+      </v-col>
+
       <!-- Investors List -->
       <v-col cols="12" md="8" class="mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
@@ -35,16 +44,16 @@
 </template>
 
 <script setup lang="ts">
-import {toCurrency} from "@/stats/Utils";
-import {computed} from "vue";
-import {AccountState} from "@/stats/AccountState";
+import { toCurrency } from "@/stats/Utils";
+import { computed } from "vue";
+import { AccountState } from "@/stats/AccountState";
 
 // Import the necessary state
 const {
   coinbaseState,
   usdAccount,
   usdcAccount,
-  btcAccount
+  btcAccount,
 } = AccountState();
 
 // Total account value: BTC + Cash + USDC
@@ -102,7 +111,6 @@ const investors = computed(() => {
       name: "Tim",
       percentageOwned: 42,
       initialStake: 600,
-
     },
     {
       name: "Rick",
@@ -113,9 +121,10 @@ const investors = computed(() => {
 
   // Calculating values for each investor based on their percentage share
   return investorData.map((investor) => {
-    // const totalValue = (totalAccountUSDValue.value * investor.percentageOwned) / 100;
-    const totalValue = totalAccountUSDValue.value;
-    const initialStake = totalValue * 0.8; // Example calculation for initial stake
+    const totalValue = (totalAccountUSDValue.value * investor.percentageOwned) / 100;
+
+    // Using the initial stake from investorData directly
+    const initialStake = investor.initialStake;
     const profitLoss = totalValue - initialStake;
 
     return {
