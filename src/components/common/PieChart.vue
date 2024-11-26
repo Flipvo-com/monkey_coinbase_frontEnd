@@ -3,6 +3,12 @@
     <div class="summary-content">
       <i class="fa-solid fa-chart-pie mr-2"></i>
       <span class="summary-title">Summary</span>
+      <div class="total-value">Total: $10,000</div>
+      <div class="individual-values">
+        <div>Bitcoin: $7,000</div>
+        <div>Cash: $2,000</div>
+        <div>USDC: $1,000</div>
+      </div>
     </div>
     <div class="chart-container">
       <canvas id="myPieChart"></canvas>
@@ -11,7 +17,7 @@
 </template>
 
 <script>
-import {Chart} from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default {
@@ -33,7 +39,7 @@ export default {
             {
               label: 'Crypto Distribution',
               data: [70, 30],
-              backgroundColor: ['#002fff', '#0b9f07'], // Dark neon blue for Bitcoin and purple for Cash
+              backgroundColor: ['#002fff', '#0b9f07'], // Dark neon blue for Bitcoin and green for Cash
               borderColor: '#1e1e2e',
               borderWidth: 2,
             },
@@ -97,5 +103,22 @@ export default {
   flex: 2;
   display: flex;
   justify-content: center;
+}
+
+.total-value {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.individual-values {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #b0b0b0;
+}
+
+.individual-values div {
+  margin-top: 2px;
 }
 </style>
