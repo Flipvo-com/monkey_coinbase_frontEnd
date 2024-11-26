@@ -1,6 +1,6 @@
 <template>
   <v-app v-if="pageAvailable">
-    <!--    <top-bar/>-->
+    <!--        <top-bar/>-->
     <DashboardRouteView/>
     <BottomBar/>
   </v-app>
@@ -18,6 +18,8 @@ import {AccountState} from "@/stats/AccountState";
 import BottomBar from "@/components/common/BottomBar.vue";
 import LoadingProgress from "@/components/common/LoadingProgress.vue";
 import DashboardRouteView from "@/components/dashboard/dashboardRouteView.vue";
+
+import '@/assets/css/styles.css';
 
 const {loginToken} = loginState();
 
