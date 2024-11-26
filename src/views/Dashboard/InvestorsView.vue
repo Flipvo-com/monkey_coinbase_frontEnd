@@ -44,17 +44,12 @@
 </template>
 
 <script setup lang="ts">
-import { toCurrency } from "@/stats/Utils";
-import { computed } from "vue";
-import { AccountState } from "@/stats/AccountState";
+import {computed} from "vue";
+import {toCurrency} from "@/stats/Utils";
+import {AccountState} from "@/stats/AccountState";
 
 // Import the necessary state
-const {
-  coinbaseState,
-  usdAccount,
-  usdcAccount,
-  btcAccount,
-} = AccountState();
+const {coinbaseState, usdAccount, usdcAccount, btcAccount} = AccountState();
 
 // Total account value: BTC + Cash + USDC
 const totalAccountUSDValue = computed(() => {
@@ -105,7 +100,7 @@ const investors = computed(() => {
     {
       name: "Chris",
       percentageOwned: 50,
-      initialStake: 600,
+      initialStake: 788,
     },
     {
       name: "Tim",
