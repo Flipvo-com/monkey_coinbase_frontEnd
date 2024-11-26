@@ -11,13 +11,9 @@
     </v-btn>
 
     <!-- New custom button -->
-    <v-btn key="newButton" @click="handleNewButtonClick">
-      <span>New Button</span>
-      <span>New Button</span>
-      <span>New Button</span>
-      <span>New Button</span>
-      <span>New Button</span>
-    </v-btn>
+<!--    <v-btn key="newButton" @click="handleNewButtonClick">-->
+<!--      <span>New Button</span>-->
+<!--    </v-btn>-->
 
   </v-bottom-navigation>
 </template>

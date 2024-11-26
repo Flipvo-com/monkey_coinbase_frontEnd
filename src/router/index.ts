@@ -81,7 +81,6 @@ const routes: CustomRouteRecordRaw[] = [
 					dashboard: () => import('@/views/Dashboard/dashboardIndex.vue')
 				}
 			},
-
 			{
 				path: 'analyse',
 				name: 'analyse',
@@ -94,7 +93,33 @@ const routes: CustomRouteRecordRaw[] = [
 					dashboard: () => import('@/views/Dashboard/analyseData.vue')
 				}
 			},
+			{
+				path: 'investors',
+				name: 'investors',
+				meta: {
+					name: 'Investors',
+					icon: 'fa-duotone fa-user-tie',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/InvestorsView.vue')
+				}
+			},
+			{
+				path: 'settings',
+				name: 'userSettings',
+				meta: {
+					name: 'Settings',
+					icon: 'fa-duotone fa-cog',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/UserSettings.vue')
+				}
+			},
 
+
+			// todo - old, has all the copy/paste info from terminal
 			{
 				path: 'dashboard-settings',
 				name: 'dashboardSettings',
@@ -107,7 +132,6 @@ const routes: CustomRouteRecordRaw[] = [
 					dashboard: () => import('@/views/Dashboard/DashboardSettings.vue')
 				}
 			},
-
 			{
 				path: 'insights',
 				name: 'insights',
@@ -121,18 +145,6 @@ const routes: CustomRouteRecordRaw[] = [
 				}
 			},
 
-			{
-				path: 'settings',
-				name: 'userSettings',
-				meta: {
-					name: 'Settings',
-					icon: 'fa-duotone fa-cog',
-					__auth: true
-				},
-				components: {
-					dashboard: () => import('@/views/Dashboard/UserSettings.vue')
-				}
-			},
 		]
 	},
 ]
