@@ -21,7 +21,7 @@
               <v-col cols="12" v-for="(investor, index) in investors" :key="index" class="py-0">
                 <v-card class="mb-2" outlined>
                   <v-card-title class="d-flex align-items-center justify-space-between">
-                    <span>🧑 {{ investor.name }}</span>
+                    <span>👽 {{ investor.name }}</span>
                     <span class="_text-blue-400">💸 Total Value: {{ toCurrency(investor.totalValue) }}</span>
                   </v-card-title>
                   <v-card-text>
