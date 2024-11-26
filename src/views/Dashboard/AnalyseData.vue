@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-wrap gap-2 mb-5">
-
     <v-card class="flex-1">
       <v-card-title class="flex justify-between items-center">
         <h1 class="flex items-center space-x-2">
@@ -9,7 +8,6 @@
         </h1>
         <span class="text-gray-600">{{ buyOrder.length + sellOrder.length }} Orders</span>
       </v-card-title>
-
       <v-card-text>
         <!-- Sell Orders Section -->
         <section>
@@ -53,24 +51,6 @@
 
       </v-card-text>
     </v-card>
-
-    <!-- Open Orders Summary -->
-    <v-card class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
-      <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
-        <v-icon class="mr-2">mdi-format-list-bulleted</v-icon>📃 Open Orders
-      </v-card-title>
-      <v-card-text>
-        <v-list dense>
-          <v-list-item v-for="order in openOrders" :key="order.order_id">
-            <v-list-item-title>
-              <span>{{ order.side }} Order 👉</span>
-              <span class="float-right">Size: {{ order.size }} @ {{ order.price }}</span>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-card-text>
-    </v-card>
-
   </div>
 </template>
 
@@ -84,28 +64,18 @@ const { accountOrderList, coinbaseState } = AccountState();
 // Computed properties for accounts and prices
 const accounts = computed(() => coinbaseState.value.accounts || []);
 
-const openOrders = computed(() => {
-  return coinbaseState.value.accounts.flatMap((account: any) => account.orders || [])
-      .filter((order: any) => order.status === "OPEN")
-      .map((order: any) => ({
-        side: order.side,
-        price: order.order_configuration.limit_limit_gtc.limit_price,
-        size: order.order_configuration.limit_limit_gtc.base_size,
-      }));
-});
-
 const sellOrder = computed(() => {
   return accountOrderList.value
       .filter((item) => item.side === "SELL")
       .sort((a, b) => parseFloat(b.order_configuration.limit_limit_gtc.limit_price) - parseFloat(a.order_configuration.limit_limit_gtc.limit_price))
-      .slice(0, 5); // Limit to 5 orders
+      .slice(0, 5);
 });
 
 const buyOrder = computed(() => {
   return accountOrderList.value
       .filter((item) => item.side === "BUY")
       .sort((a, b) => parseFloat(b.order_configuration.limit_limit_gtc.limit_price) - parseFloat(a.order_configuration.limit_limit_gtc.limit_price))
-      .slice(0, 5); // Limit to 5 orders
+      .slice(0, 5);
 });
 
 const fillCountColor = (fillCount: number, color = 'blue') => {
