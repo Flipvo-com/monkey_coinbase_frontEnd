@@ -1,11 +1,8 @@
 <template>
   <v-container class="mb-2" style="padding: 1px" fluid>
+    <PieChart />
+
     <v-row>
-
-      <div>
-            <PieChart />
-
-      </div>
       <!-- Bitcoin Account Card -->
       <v-col cols="12" md="4" class="mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
