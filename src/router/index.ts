@@ -78,7 +78,7 @@ const routes: CustomRouteRecordRaw[] = [
 					__auth: true
 				},
 				components: {
-					dashboard: () => import('@/views/Dashboard/dashboardIndex.vue')
+					dashboard: () => import('@/views/Dashboard/DashboardIndex.vue')
 				}
 			},
 			{
@@ -120,31 +120,31 @@ const routes: CustomRouteRecordRaw[] = [
 
 
 			// todo - old, has all the copy/paste info from terminal
-			// {
-			// 	path: 'dashboard-settings',
-			// 	name: 'dashboardSettings',
-			// 	meta: {
-			// 		name: 'Dashboard',
-			// 		icon: 'fa-duotone fa-tachometer-alt',
-			// 		__auth: true
-			// 	},
-			// 	components: {
-			// 		dashboard: () => import('@/views/Dashboard/DashboardSettings.vue')
-			// 	}
-			// },
+			{
+				path: 'dashboard-settings',
+				name: 'dashboardSettings',
+				meta: {
+					name: 'Dashboard',
+					icon: 'fa-duotone fa-tachometer-alt',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/DashboardSettings.vue')
+				}
+			},
 
-			// {
-			// 	path: 'insights',
-			// 	name: 'insights',
-			// 	meta: {
-			// 		name: 'Insights',
-			// 		icon: 'fa-duotone fa-lightbulb',
-			// 		__auth: true
-			// 	},
-			// 	components: {
-			// 		dashboard: () => import('@/views/Dashboard/InsightsView.vue')
-			// 	}
-			// },
+			{
+				path: 'insights',
+				name: 'insights',
+				meta: {
+					name: 'Insights',
+					icon: 'fa-duotone fa-lightbulb',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/InsightsView.vue')
+				}
+			},
 
 		]
 	},

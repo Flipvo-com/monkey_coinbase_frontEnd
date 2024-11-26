@@ -1,4 +1,6 @@
 <template>
+  <PieChart />
+
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>
       <!-- Bitcoin Account Card -->
@@ -227,6 +229,7 @@
 import {toCurrency} from "@/stats/Utils";
 import {computed} from "vue";
 import {AccountState} from "@/stats/AccountState";
+import PieChart from "@/components/common/PieChart.vue";
 
 const {
   accountOrderList,
@@ -374,6 +377,16 @@ const openOrders = computed(() => {
         size: order.order_configuration.limit_limit_gtc.base_size,
       }));
 });
+
+
+// import PieChart from './components/PieChart.vue';
+//
+// export default {
+//   components: {
+//     PieChart,
+//   },
+// };
+
 
 </script>
 
