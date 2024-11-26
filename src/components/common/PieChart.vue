@@ -3,11 +3,11 @@
     <div class="summary-content">
       <i class="fa-solid fa-chart-pie mr-2"></i>
       <span class="summary-title">Summary</span>
-      <div class="total-value">Total: $10,000</div>
+      <div class="total-value">Total: {{ toCurrency(totalValue) }}</div>
       <div class="individual-values">
-        <div>Bitcoin: $7,000</div>
-        <div>Cash: $2,000</div>
-        <div>USDC: $1,000</div>
+        <div>Bitcoin: {{ bitcoinValue }}</div>
+        <div>Cash: {{ cashValue }}</div>
+        <div>USDC: {{ usdcValue }}</div>
       </div>
     </div>
     <div class="chart-container">
@@ -19,13 +19,37 @@
 <script>
 import {Chart} from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import {toCurrency} from "@/stats/Utils";
 
 export default {
   name: 'CryptoPieChart',
+  props: {
+    totalValue: {
+      type: Number,
+      required: true,
+    },
+    bitcoinValue: {
+      type: String,
+      required: true,
+    },
+    cashValue: {
+      type: String,
+      required: true,
+    },
+    usdcValue: {
+      type: String,
+      required: true,
+    },
+    chartData: {
+      type: Array,
+      required: true,
+    },
+  },
   mounted() {
     this.renderChart();
   },
   methods: {
+    toCurrency,
     renderChart() {
       // Registering the datalabels plugin
       Chart.register(ChartDataLabels);
@@ -34,12 +58,15 @@ export default {
       new Chart(ctx, {
         type: 'pie',
         data: {
-          labels: ['Bitcoin', 'Cash'],
+          labels: ['Bitcoin', 'Cash', 'USDC'],
           datasets: [
             {
               label: 'Crypto Distribution',
+              // data: this.chartData,
+              // todo - fix this
               data: [70, 30],
-              backgroundColor: ['#002fff', '#0b9f07'], // Dark neon blue for Bitcoin and green for Cash
+
+              backgroundColor: ['#002fff', '#0b9f07', '#ffa500'], // Dark neon blue for Bitcoin, green for Cash, and orange for USDC
               borderColor: '#1e1e2e',
               borderWidth: 2,
             },

@@ -1,5 +1,11 @@
 <template>
-  <PieChart />
+  <PieChart
+      :totalValue="totalAccountUSDValue"
+      :bitcoinValue="totalBtcValue"
+      :cashValue="totalCashValue"
+      :usdcValue="totalUsdcValue"
+      :chartData="chartData"
+  />
 
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>
@@ -257,6 +263,12 @@ const btcPrice = computed(() => {
   return (asks + bids) / 2;
 });
 
+// Total account value: BTC + Cash + USDC
+const totalAccountUSDValue = computed(() => {
+  const btcValue = totalBtc.value * btcPrice.value;
+  return btcValue + totalCash.value + totalUsdc.value;
+});
+
 // Bitcoin Account
 const totalBtc = computed(() => {
   // return parseFloat(accountInfo.value.available_balance.value) + parseFloat(accountInfo.value.hold.value);
@@ -319,6 +331,7 @@ const usdcAvailableValue = computed(() => {
 const usdcHoldValue = computed(() => {
   return toCurrency(usdcHold.value);
 });
+
 
 // todo - Keep working my way down
 // todo - Keep working my way down
