@@ -29,15 +29,15 @@ export default {
       required: true,
     },
     bitcoinValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     cashValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     usdcValue: {
-      type: String,
+      type: Number,
       required: true,
     },
     chartData: {
@@ -62,10 +62,7 @@ export default {
           datasets: [
             {
               label: 'Crypto Distribution',
-              // data: this.chartData,
-              // todo - fix this
-              data: [70, 38, 2],
-
+              data: this.chartData,
               backgroundColor: ['#002fff', '#0b9f07', '#ffa500'], // Dark neon blue for Bitcoin, green for Cash, and orange for USDC
               borderColor: '#1e1e2e',
               borderWidth: 2,
