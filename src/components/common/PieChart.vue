@@ -86,7 +86,11 @@ export default {
             },
             datalabels: {
               color: '#f0f0f0',
-              formatter: (value) => `${value}%`, // Display percentages on the pie chart
+              formatter: (value, context) => {
+                const total = context.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+                const percentage = (value / total * 100).toFixed(2);
+                return percentage < 1 ? '' : `${percentage}%`;
+              }, // Display percentages of the total account in USD terms, rounded to 2 decimal places on the pie chart, hide if less than 1%
               font: {
                 size: 14,
               },
