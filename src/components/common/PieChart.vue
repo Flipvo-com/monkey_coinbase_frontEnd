@@ -2,12 +2,12 @@
   <div class="summary-container">
     <div class="summary-content">
       <i class="fa-solid fa-chart-pie mr-2"></i>
-      <span class="summary-title">Summary</span>
-      <div class="total-value">Total: {{ toCurrency(totalValue) }}</div>
+      <span class="summary-title">⭐ Summary</span>
+      <div class="total-value">🏦 Total: {{ toCurrency(totalValue) }}</div>
       <div class="individual-values">
-        <div>Bitcoin: {{ bitcoinValue }}</div>
-        <div>Cash: {{ cashValue }}</div>
-        <div>USDC: {{ usdcValue }}</div>
+        <div class="mb-1">₿ Bitcoin: {{ bitcoinValue }}</div>
+        <div class="mb-1">💵 Cash: {{ cashValue }}</div>
+        <div class="mb-1">🪙 USDC: {{ usdcValue }}</div>
       </div>
     </div>
     <div class="chart-container">
@@ -64,7 +64,7 @@ export default {
               label: 'Crypto Distribution',
               // data: this.chartData,
               // todo - fix this
-              data: [70, 30],
+              data: [70, 38, 2],
 
               backgroundColor: ['#002fff', '#0b9f07', '#ffa500'], // Dark neon blue for Bitcoin, green for Cash, and orange for USDC
               borderColor: '#1e1e2e',
