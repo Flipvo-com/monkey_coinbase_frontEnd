@@ -35,32 +35,97 @@
 </template>
 
 <script setup lang="ts">
-import { toCurrency } from "@/stats/Utils";
+import {toCurrency} from "@/stats/Utils";
+import {computed} from "vue";
+import {AccountState} from "@/stats/AccountState";
 
-// Fake Investors Array
-const investors = [
-  {
-    name: "Chris",
-    totalValue: 1500,
-    initialStake: 2000,
-    percentageOwned: 60,
-    profitLoss: 2000,
-  },
-  {
-    name: "Tim",
-    totalValue: 750,
-    initialStake: 600,
-    percentageOwned: 40,
-    profitLoss: 150,
-  },
-  {
-    name: "Rick",
-    totalValue: 130,
-    initialStake: 100,
-    percentageOwned: 10,
-    profitLoss: 30,
-  },
-];
+// Import the necessary state
+const {
+  coinbaseState,
+  usdAccount,
+  usdcAccount,
+  btcAccount
+} = AccountState();
+
+// Total account value: BTC + Cash + USDC
+const totalAccountUSDValue = computed(() => {
+  const btcValue = totalBtc.value * btcPrice.value;
+  return btcValue + totalCash.value + totalUsdc.value;
+});
+
+// Bitcoin Account
+const totalBtc = computed(() => {
+  return Number((btcAvailable.value + btcHold.value).toFixed(8));
+});
+const btcAvailable = computed(() => {
+  return Number(parseFloat(btcAccount.value.available_balance.value).toFixed(8));
+});
+const btcHold = computed(() => {
+  return Number(parseFloat(btcAccount.value.hold.value).toFixed(8));
+});
+
+// Bitcoin Price
+const btcPrice = computed(() => {
+  let BTCBook = coinbaseState.value.pricebooks.find((item: {
+    product_id: string;
+    asks: { price: string }[];
+    bids: { price: string }[];
+  }) => item.product_id === "BTC-USD");
+  if (!BTCBook) {
+    return 0;
+  }
+  let asks = parseFloat(BTCBook?.asks[0].price);
+  let bids = parseFloat(BTCBook?.bids[0].price);
+  return (asks + bids) / 2;
+});
+
+// Cash Account
+const totalCash = computed(() => {
+  return parseFloat(usdAccount.value.available_balance.value) + parseFloat(usdAccount.value.hold.value);
+});
+
+// USDC Account
+const totalUsdc = computed(() => {
+  return parseFloat(usdcAccount.value.available_balance.value) + parseFloat(usdcAccount.value.hold.value);
+});
+
+// Investors Array with dynamically calculated values
+const investors = computed(() => {
+  // Initial hard-coded investor percentage shares
+  const investorData = [
+    {
+      name: "Chris",
+      percentageOwned: 50,
+      initialStake: 600,
+    },
+    {
+      name: "Tim",
+      percentageOwned: 42,
+      initialStake: 600,
+
+    },
+    {
+      name: "Rick",
+      percentageOwned: 8,
+      initialStake: 100,
+    },
+  ];
+
+  // Calculating values for each investor based on their percentage share
+  return investorData.map((investor) => {
+    // const totalValue = (totalAccountUSDValue.value * investor.percentageOwned) / 100;
+    const totalValue = totalAccountUSDValue.value;
+    const initialStake = totalValue * 0.8; // Example calculation for initial stake
+    const profitLoss = totalValue - initialStake;
+
+    return {
+      ...investor,
+      totalValue,
+      initialStake,
+      profitLoss,
+    };
+  });
+});
 </script>
 
 <style scoped>
