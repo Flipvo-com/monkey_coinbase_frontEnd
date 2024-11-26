@@ -78,7 +78,7 @@ const routes: CustomRouteRecordRaw[] = [
 					__auth: true
 				},
 				components: {
-					dashboard: () => import('@/views/Dashboard/dashboardIndex.vue')
+					dashboard: () => import('@/views/Dashboard/DashboardIndex.vue')
 				}
 			},
 			{
