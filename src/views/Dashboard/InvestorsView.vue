@@ -6,31 +6,31 @@
         <!-- Total Account Value -->
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
           <v-card-title>
-            <span class="_text-3xl">Total Account Value: {{ toCurrency(totalAccountUSDValue) }}</span>
+            <span class="_text-3xl">💰 Total Account Value: {{ toCurrency(totalAccountUSDValue) }}</span>
           </v-card-title>
         </v-card>
       </v-col>
       <!-- Investors List -->
-      <v-col cols="12" md="8" class="py-1 mb-0">
+      <v-col cols="12" class="py-1 mb-0">
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
           <v-card-title>
-            <span class="_text-3xl">Investors</span>
+            <span class="_text-3xl">👥 Investors</span>
           </v-card-title>
           <v-card-text>
             <v-row>
               <v-col cols="12" v-for="(investor, index) in investors" :key="index" class="py-0">
                 <v-card class="mb-2" outlined>
                   <v-card-title class="d-flex align-items-center justify-space-between">
-                    <span>{{ investor.name }}</span>
-                    <span class="_text-blue-400">Total Value: {{ toCurrency(investor.totalValue) }}</span>
+                    <span>🧑 {{ investor.name }}</span>
+                    <span class="_text-blue-400">💸 Total Value: {{ toCurrency(investor.totalValue) }}</span>
                   </v-card-title>
                   <v-card-text>
                     <div class="d-flex justify-space-between">
-                      <span class="_text-green-300">Initial Stake: {{ toCurrency(investor.initialStake) }}</span>
-                      <span class="_text-blue-400">Percentage Owned: {{ investor.percentageOwned }}%</span>
+                      <span class="_text-green-300">💵 Initial Stake: {{ toCurrency(investor.initialStake) }}</span>
+                      <span class="_text-blue-400">📊 Percentage Owned: {{ investor.percentageOwned }}%</span>
                       <span :class="investor.profitLoss >= 0 ? '_text-green-300' : '_text-red-200'">
-                  {{ investor.profitLoss >= 0 ? 'Profit: ' : 'Loss: ' }} {{ toCurrency(investor.profitLoss) }}
-                </span>
+                        {{ investor.profitLoss >= 0 ? '📈 Profit: ' : '📉 Loss: ' }} {{ toCurrency(investor.profitLoss) }}
+                      </span>
                     </div>
                   </v-card-text>
                 </v-card>
