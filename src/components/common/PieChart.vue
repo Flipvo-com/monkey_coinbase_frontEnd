@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import {Chart} from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 export default {
   name: 'CryptoPieChart',
@@ -20,6 +21,9 @@ export default {
   },
   methods: {
     renderChart() {
+      // Registering the datalabels plugin
+      Chart.register(ChartDataLabels);
+
       const ctx = document.getElementById('myPieChart').getContext('2d');
       new Chart(ctx, {
         type: 'pie',
@@ -31,7 +35,7 @@ export default {
               data: [70, 30],
               backgroundColor: ['#00e676', '#6200ea'], // Neon green and purple for crypto style
               borderColor: '#1e1e2e',
-              borderWidth: 2,
+              borderWidth: 3,
             },
           ],
         },
@@ -43,11 +47,22 @@ export default {
               labels: {
                 color: '#f0f0f0',
                 font: {
-                  size: 14,
+                  size: 12,
                 },
               },
             },
+            tooltip: {
+              enabled: true, // Enable tooltips to show additional information on hover
+            },
+            datalabels: {
+              color: '#f0f0f0',
+              formatter: (value) => `${value}%`, // Display percentages on the pie chart
+              font: {
+                size: 14,
+              },
+            },
           },
+          events: [], // Disable all interactivity, including click events
         },
       });
     },
