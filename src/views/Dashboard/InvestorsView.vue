@@ -6,7 +6,7 @@
         <!-- Total Account Value -->
         <v-card style="border: 1px solid #7a7a7a; padding: 1rem;">
           <v-card-title>
-            <span class="_text-3xl">💰 Total Account Value: {{ toCurrency(totalAccountUSDValue) }}</span>
+            <span class="_text-3xl">💰 {{ toCurrency(totalAccountUSDValue) }}</span>
           </v-card-title>
         </v-card>
       </v-col>
