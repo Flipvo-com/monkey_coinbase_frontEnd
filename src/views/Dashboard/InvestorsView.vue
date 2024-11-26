@@ -99,17 +99,17 @@ const investors = computed(() => {
   const investorData = [
     {
       name: "Chris",
-      percentageOwned: 55,
+      percentageOwned: 54,
       initialStake: 788,
     },
     {
       name: "Tim",
-      percentageOwned: 42,
+      percentageOwned: 40,
       initialStake: 600,
     },
     {
       name: "Rick",
-      percentageOwned: 5,
+      percentageOwned: 6,
       initialStake: 100,
     },
   ];
