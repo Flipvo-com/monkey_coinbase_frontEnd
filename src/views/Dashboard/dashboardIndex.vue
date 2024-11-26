@@ -24,11 +24,11 @@
                 </template>
               </v-tooltip>
 
-              <v-tooltip text="Total BTC">
+              <v-tooltip text="BTC Value">
                 <template v-slot:activator="{ props }">
                   <v-btn v-bind="props" style="padding: 0">
-                    <v-chip prepend-icon="fa-brands fa-bitcoin">
-                      {{ totalBtc }}
+                    <v-chip>
+                      {{ totalBtcValue }}
                     </v-chip>
                   </v-btn>
                 </template>
