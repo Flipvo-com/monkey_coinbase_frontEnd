@@ -9,6 +9,7 @@
           </v-card-title>
           <v-card-text v-if="product">
             <v-row>
+              <!-- Basic Information -->
               <v-col cols="12">
                 <div class="d-flex justify-space-between">
                   <span>💵 Price: {{ toCurrency(Number(product.price)) }}</span>
@@ -17,11 +18,49 @@
                   <span>💰 24h Volume (USD): {{ toCurrency(dayVolumeUsdValue) }}</span>
                 </div>
               </v-col>
+
+              <!-- Additional Information -->
               <v-col cols="12">
                 <div class="d-flex justify-space-between">
+                  <span>📊 Volume % Change (24h): {{ Number(product.volume_percentage_change_24h).toFixed(2) }}%</span>
                   <span>🔄 Status: {{ product.status }}</span>
                   <span>🪙 Base Currency: {{ product.base_name }}</span>
                   <span>💱 Quote Currency: {{ product.quote_name }}</span>
+                </div>
+              </v-col>
+
+              <v-col cols="12">
+                <div class="d-flex justify-space-between">
+                  <span>📉 Base Increment: {{ product.base_increment }}</span>
+                  <span>📊 Quote Increment: {{ product.quote_increment }}</span>
+                  <span>🔄 Product Type: {{ product.product_type }}</span>
+                  <span>📍 Venue: {{ product.product_venue }}</span>
+                </div>
+              </v-col>
+
+              <v-col cols="12">
+                <div class="d-flex justify-space-between">
+                  <span>🔍 Minimum Trade Size (Base): {{ product.base_min_size }}</span>
+                  <span>🔍 Maximum Trade Size (Base): {{ product.base_max_size }}</span>
+                  <span>🔍 Minimum Trade Size (Quote): {{ product.quote_min_size }}</span>
+                  <span>🔍 Maximum Trade Size (Quote): {{ product.quote_max_size }}</span>
+                </div>
+              </v-col>
+
+              <v-col cols="12">
+                <div class="d-flex justify-space-between">
+                  <span>🪙 Aliases: {{ product.alias_to.join(', ') }}</span>
+                  <span>💰 Approximate 24h Quote Volume: {{ toCurrency(Number(product.approximate_quote_24h_volume)) }}</span>
+                </div>
+              </v-col>
+
+              <!-- Trading Statuses -->
+              <v-col cols="12">
+                <div class="d-flex justify-space-between">
+                  <span>🛑 Cancel Only: {{ product.cancel_only ? 'Yes' : 'No' }}</span>
+                  <span>📉 Limit Only: {{ product.limit_only ? 'Yes' : 'No' }}</span>
+                  <span>📈 Post Only: {{ product.post_only ? 'Yes' : 'No' }}</span>
+                  <span>⚠️ Trading Disabled: {{ product.trading_disabled ? 'Yes' : 'No' }}</span>
                 </div>
               </v-col>
             </v-row>
@@ -44,16 +83,41 @@ interface ProductData {
   price: string;
   price_percentage_change_24h: string;
   volume_24h: string;
-  status: string;
+  volume_percentage_change_24h: string;
+  base_increment: string;
+  quote_increment: string;
+  quote_min_size: string;
+  quote_max_size: string;
+  base_min_size: string;
+  base_max_size: string;
   base_name: string;
   quote_name: string;
-  // Add more fields if needed, based on the API response
+  status: string;
+  product_type: string;
+  alias_to: string[];
+  product_venue: string;
+  approximate_quote_24h_volume: string;
+  cancel_only: boolean;
+  limit_only: boolean;
+  post_only: boolean;
+  trading_disabled: boolean;
 }
 
 const product = ref<ProductData | null>(null);
 
 const dayVolumeUsdValue = computed(() => {
   return product.value ? Number(product.value.volume_24h) * Number(product.value.price) : 0;
+});
+const tradingStatus = computed(() => {
+  if (product.value) {
+    return {
+      cancelOnly: product.value.cancel_only ? 'Yes' : 'No',
+      limitOnly: product.value.limit_only ? 'Yes' : 'No',
+      postOnly: product.value.post_only ? 'Yes' : 'No',
+      tradingDisabled: product.value.trading_disabled ? 'Yes' : 'No',
+    };
+  }
+  return { cancelOnly: 'No', limitOnly: 'No', postOnly: 'No', tradingDisabled: 'No' };
 });
 
 // Utility function to format numbers as currency
