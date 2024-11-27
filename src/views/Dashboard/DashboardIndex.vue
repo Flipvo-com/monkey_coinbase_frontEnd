@@ -145,6 +145,11 @@
     </v-row>
   </v-container>
 
+
+  <div>
+    <ProductInfoCard />
+  </div>
+
   <!-- Account Summary Cards - todo - buttons -->
   <div class="text-center d-none">
     <div>
@@ -238,6 +243,7 @@ import {toCurrency} from "@/stats/Utils";
 import {computed} from "vue";
 import {AccountState} from "@/stats/AccountState";
 import PieChart from "@/components/common/PieChart.vue";
+import ProductInfoCard from "@/components/dashboard/ProductInfoCard.vue";
 
 const {
   accountOrderList,
