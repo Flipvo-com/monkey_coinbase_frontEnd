@@ -106,18 +106,18 @@ const routes: CustomRouteRecordRaw[] = [
 				}
 			},
 
-			// {
-			// 	path: 'settings',
-			// 	name: 'userSettings',
-			// 	meta: {
-			// 		name: 'Settings',
-			// 		icon: 'fa-duotone fa-cog',
-			// 		__auth: true
-			// 	},
-			// 	components: {
-			// 		dashboard: () => import('@/views/Dashboard/UserSettings.vue')
-			// 	}
-			// },
+			{
+				path: 'settings',
+				name: 'userSettings',
+				meta: {
+					name: 'Settings',
+					icon: 'fa-duotone fa-cog',
+					__auth: true
+				},
+				components: {
+					dashboard: () => import('@/views/Dashboard/UserSettings.vue')
+				}
+			},
 
 
 			// todo - old, has all the copy/paste info from terminal
