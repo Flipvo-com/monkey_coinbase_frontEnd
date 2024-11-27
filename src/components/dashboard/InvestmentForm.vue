@@ -37,7 +37,8 @@
     </v-card>
 
     <!-- Existing Investments -->
-    <v-card v-if="showInvestmentsList" class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
+    <v-card v-if="showInvestmentsList"
+            class="w-full md:w-1/3 bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 p-4 shadow-md">
       <v-card-title class="text-gray-800 dark:text-gray-100 font-semibold">
         <v-icon class="mr-2">mdi-file-document-outline</v-icon>
         Existing Investments
@@ -62,15 +63,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, PropType } from 'vue'
+import {PropType, reactive} from 'vue'
 
-/** Props to allow parent components to pass data */
-const users = defineProps<Array<{ id: number; name: string }>>({
-  default: () => [],
-})
-
-const investments = defineProps<Array<{ id: number; user_name: string; percentage: string }>>({
-  default: () => [],
+/** Combine all props into a single defineProps call */
+const props = defineProps({
+  users: {
+    type: Array as PropType<Array<{ id: number; name: string }>>,
+    default: () => [],
+  },
+  investments: {
+    type: Array as PropType<Array<{ id: number; user_name: string; percentage: string }>>,
+    default: () => [],
+  },
+  showInvestmentsList: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 /** Emit events to the parent */
@@ -83,23 +91,18 @@ const investment = reactive({
   percentage: null,
 })
 
-/** Show investments list based on parent configuration */
-const showInvestmentsList = defineProps<Boolean>({
-  default: true,
-})
-
 /** Emit the save event */
 const saveInvestment = () => {
-  emit('save', { ...investment })
+  emit('save', {...investment})
   resetForm()
 }
 
 /** Populate form for editing an investment */
 const editInvestment = (selectedInvestment: any) => {
-  emit('edit', selectedInvestment)
   investment.id = selectedInvestment.id
-  investment.user_id = users.find((user) => user.name === selectedInvestment.user_name)?.id || null
+  investment.user_id = props.users.find((user) => user.name === selectedInvestment.user_name)?.id || null
   investment.percentage = selectedInvestment.percentage
+  emit('edit', selectedInvestment)
 }
 
 /** Reset the form */
