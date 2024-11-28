@@ -1,9 +1,5 @@
 <template>
-  <v-app-bar app>
-    <v-toolbar-title>My Application</v-toolbar-title>
-    <v-spacer></v-spacer>
-    <v-btn @click="attemptLogout" color="red">Logout</v-btn>
-  </v-app-bar>
+  <v-btn @click="attemptLogout" color="red">Logout</v-btn>
 </template>
 <script setup lang="ts">
 import {loginState} from "@/stats/loginState";

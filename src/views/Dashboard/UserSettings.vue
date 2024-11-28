@@ -82,12 +82,16 @@
         <v-btn color="primary" class="text-white" @click="showComingSoon">Save Changes</v-btn>
       </div>
     </div>
+
+    <!-- Log Out Button -->
+    <LogOutButton />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import InvestmentForm from '@/components/dashboard/InvestmentForm.vue'
+import LogOutButton from "@/components/common/LogOutButton.vue";
 
 /** Mock data for users and investments */
 const users = ref([
