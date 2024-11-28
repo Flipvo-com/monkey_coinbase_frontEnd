@@ -8,6 +8,7 @@ import {
 
 import middlewareRegistry from '@/plugins/middlewares/core/middlewareRegistry'
 import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/middlewarePipeline';
+import {loginState} from "@/stats/loginState";
 
 // Define custom meta properties
 export interface CustomRouteMeta {
@@ -29,22 +30,12 @@ export  type CustomRouteRecordRaw = RouteRecordRaw & {
 
 const routes: CustomRouteRecordRaw[] = [
 	{
-		path: '/',
-		name: 'home',
-		meta: {
-			name: 'home',
-			__auth: false
-		},
-		redirect: {name: 'login'},
-		// component: HomeView,
-		// children:undefined
-	},
-	{
 		path: '/login',
 		name: 'login',
 		meta: {
 			name: 'login',
-			__auth: false
+			__auth: false,
+			guestOnly: true, // Custom meta to indicate this route is for guests only
 		},
 		component: () => import('@/views/LoginView.vue')
 	},
@@ -53,10 +44,23 @@ const routes: CustomRouteRecordRaw[] = [
 		name: 'register',
 		meta: {
 			name: 'register',
-			__auth: false
+			__auth: false,
+			guestOnly: true, // Custom meta to indicate this route is for guests only
 		},
 		// redirect: {name: 'login'},
 		component: () => import('@/views/RegisterView.vue')
+	},
+
+	{
+		path: '/',
+		name: 'home',
+		meta: {
+			name: 'home',
+			// __auth: false,
+		},
+		redirect: {name: 'dashboard'},
+		// component: HomeView,
+		// children:undefined
 	},
 	{
 		path: '/dashboard',
@@ -156,8 +160,11 @@ const router = createRouter({
 
 router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next) => {
 	// If no middleware is specified, proceed to the route
-	// console.log('to', to)
 	if (!to.meta.middleware) {
+		const {isLogin} = loginState(); // Import loginState and use it to check if user is logged in
+		if (to.meta.guestOnly && isLogin.value) {
+			return next({name: 'dashboard'}); // Redirect to dashboard if user is logged in and trying to access guest-only routes
+		}
 		return next();
 	}
 
@@ -186,4 +193,5 @@ router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, n
 		.then(() => next()) // Continue navigation if all middleware passed
 		.catch(() => next(false)); // Abort navigation if any middleware fails
 });
+
 export default router

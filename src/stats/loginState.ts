@@ -58,6 +58,7 @@ export const loginState = createGlobalState(() => {
 
 	const logout = async () => {
 		try {
+			// Send a logout request to the backend
 			await axios.post(
 				import.meta.env.VITE_API_URL + "/logout",
 				{},
@@ -67,10 +68,12 @@ export const loginState = createGlobalState(() => {
 					},
 				}
 			);
+
+			// Clear the state after logout
 			clearLog();
-			router.push("/login");
+			router.push("/login").catch(console.error); // Redirect to the login page
 		} catch (e) {
-			console.log(e);
+			console.error("Logout failed", e);
 		}
 	};
 
