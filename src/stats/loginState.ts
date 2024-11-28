@@ -10,54 +10,72 @@ interface LoginData {
 }
 
 interface UserModel {
-	[key: string]: any
+	[key: string]: any;
 }
 
 export const loginState = createGlobalState(() => {
 	const isLogin: Ref<boolean> = useStorage("isLogin", false);
-	const userLogin: Ref<UserModel | null> = useStorage('userLogin', null, undefined, {serializer: StorageSerializers.object})
-	const loginToken = useStorage("loginToken", '');
-	const loginError = ref(null);
+	const userLogin: Ref<UserModel | null> = useStorage("userLogin", null, undefined, {
+		serializer: StorageSerializers.object,
+	});
+	const loginToken = useStorage("loginToken", "");
+	const loginError = ref<string | null>(null);
 
 	const clearLog = () => {
 		isLogin.value = false;
-		// userLogin.value = {};
-		// remove from local storage userLogin
-		localStorage.removeItem('userLogin');
+		userLogin.value = null;
 		loginToken.value = null;
 		loginError.value = null;
+		localStorage.removeItem("userLogin"); // Ensuring it's removed from local storage
 	};
 
 	const login = async (credentials: LoginData) => {
+		try {
+			const response = await axios.post(import.meta.env.VITE_API_URL + "/login", credentials);
+			isLogin.value = true;
+			userLogin.value = response.data.user;
+			loginToken.value = response.data.token;
+			router.push("/dashboard"); // Use router for better SPA handling
+		} catch (error:unknown) {
+			// Handle error
+			if (axios.isAxiosError(error)) {
+				if (error.response?.status === 401) {
+					clearLog();
+					router.push("/login");
+				}
 
-		return await axios.post(import.meta.env.VITE_API_URL + "/login", credentials)
-			.then((response) => {
-				isLogin.value = true;
-				userLogin.value = response.data.user;
-				loginToken.value = response.data.token;
-				window.location.href = "/dashboard"
-			})
-			.catch((error) => {
-				loginError.value = error.response.data.message;
-				throw error;
-			});
+				// Set error message
+				loginError.value = error.response?.data?.message || "Login failed. Please try again.";
+				throw error; // Propagate error to handle loading state correctly in the calling function
+			}
+
+			// Set error message
+			// Alternatively, you can throw the error to handle loading state correctly in the calling function
+			// loginError.value = error.response?.data?.message || "Login failed. Please try again.";
+			// throw error; // Propagate error to handle loading state correctly in the calling function
+		}
 	};
 
-	const logout = () => {
+	const logout = async () => {
+		try {
+			// Send a logout request to the backend
+			await axios.post(
+				import.meta.env.VITE_API_URL + "/logout",
+				{},
+				{
+					headers: {
+						Authorization: `Bearer ${loginToken.value}`,
+					},
+				}
+			);
 
-		axios.post(import.meta.env.VITE_API_URL + "/logout", {}, {
-			headers: {
-				Authorization: `Bearer ${loginToken.value}`,
-			}
-		})
-			.then(() => {
-				clearLog();
-				router.push("/login");
-			})
-			.catch((e) => {
-				console.log(e);
-			});
-	}
+			// Clear the state after logout
+			clearLog();
+			router.push("/login").catch(console.error); // Redirect to the login page
+		} catch (e) {
+			console.error("Logout failed", e);
+		}
+	};
 
 	return {isLogin, userLogin, loginToken, loginError, logout, login};
 });

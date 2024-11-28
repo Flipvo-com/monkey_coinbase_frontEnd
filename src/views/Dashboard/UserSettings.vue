@@ -1,8 +1,15 @@
 <template>
+  <v-app-bar app>
+    <v-toolbar-title>
+      <v-icon>fa-duotone fa-cog</v-icon>
+      Settings
+    </v-toolbar-title>
+    <v-spacer></v-spacer> <!-- This pushes everything after it to the right -->
+    <LogOutButton />
+  </v-app-bar>
   <div>
     <!-- Investments Management Section -->
     <div class="investment-section">
-      <h1 class="text-xl font-semibold mb-4">Manage Investments</h1>
       <InvestmentForm
           :users="users"
           :investments="investments"
@@ -88,6 +95,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import InvestmentForm from '@/components/dashboard/InvestmentForm.vue'
+import LogOutButton from "@/components/common/LogOutButton.vue";
 
 /** Mock data for users and investments */
 const users = ref([

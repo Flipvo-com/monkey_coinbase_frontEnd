@@ -1,26 +1,26 @@
 import {
-    createRouter,
-    createWebHistory,
-    // type  NavigationGuardNext,
-    type RouteLocationNormalized,
-    type RouteRecordRaw,
-    type Router
+	createRouter,
+	createWebHistory,
+	type RouteLocationNormalized,
+	type Router,
+	type RouteRecordRaw
 } from 'vue-router'
-import Login from '@/views/LoginView.vue'
 
 import middlewareRegistry from '@/plugins/middlewares/core/middlewareRegistry'
 import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/middlewarePipeline';
+import {loginState} from "@/stats/loginState";
 
 // Define custom meta properties
 export interface CustomRouteMeta {
 	name?: string;
 }
+
 export interface MiddlewareContext {
-    to: RouteLocationNormalized;
-    from: RouteLocationNormalized;
-    next: () => Promise<void>; // Ensure next is a Promise-returning function
-    router: Router;
-    params?: string[];
+	to: RouteLocationNormalized;
+	from: RouteLocationNormalized;
+	next: () => Promise<void>; // Ensure next is a Promise-returning function
+	router: Router;
+	params?: string[];
 }
 
 // Create a custom type for routes with custom meta
@@ -30,22 +30,12 @@ export  type CustomRouteRecordRaw = RouteRecordRaw & {
 
 const routes: CustomRouteRecordRaw[] = [
 	{
-		path: '/',
-		name: 'home',
-		meta: {
-			name: 'home',
-			__auth: false
-		},
-		redirect: {name: 'login'},
-		// component: HomeView,
-		// children:undefined
-	},
-	{
 		path: '/login',
 		name: 'login',
 		meta: {
 			name: 'login',
-			__auth: false
+			__auth: false,
+			guestOnly: true, // Custom meta to indicate this route is for guests only
 		},
 		component: () => import('@/views/LoginView.vue')
 	},
@@ -54,10 +44,23 @@ const routes: CustomRouteRecordRaw[] = [
 		name: 'register',
 		meta: {
 			name: 'register',
-			__auth: false
+			__auth: false,
+			guestOnly: true, // Custom meta to indicate this route is for guests only
 		},
 		// redirect: {name: 'login'},
 		component: () => import('@/views/RegisterView.vue')
+	},
+
+	{
+		path: '/',
+		name: 'home',
+		meta: {
+			name: 'home',
+			// __auth: false,
+		},
+		redirect: {name: 'dashboard'},
+		// component: HomeView,
+		// children:undefined
 	},
 	{
 		path: '/dashboard',
@@ -105,7 +108,6 @@ const routes: CustomRouteRecordRaw[] = [
 					dashboard: () => import('@/views/Dashboard/InvestorsView.vue')
 				}
 			},
-
 			{
 				path: 'settings',
 				name: 'userSettings',
@@ -158,8 +160,11 @@ const router = createRouter({
 
 router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next) => {
 	// If no middleware is specified, proceed to the route
-	// console.log('to', to)
 	if (!to.meta.middleware) {
+		const {isLogin} = loginState(); // Import loginState and use it to check if user is logged in
+		if (to.meta.guestOnly && isLogin.value) {
+			return next({name: 'dashboard'}); // Redirect to dashboard if user is logged in and trying to access guest-only routes
+		}
 		return next();
 	}
 
@@ -188,4 +193,5 @@ router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, n
 		.then(() => next()) // Continue navigation if all middleware passed
 		.catch(() => next(false)); // Abort navigation if any middleware fails
 });
+
 export default router

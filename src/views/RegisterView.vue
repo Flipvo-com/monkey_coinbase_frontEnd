@@ -5,17 +5,14 @@
         <router-link :to="{name:'home'}">
           <v-icon size="100" color="primary">fa-duotone fa-solid fa-monkey</v-icon>
         </router-link>
-
         <v-card class="_w-96" :loading="loadingProgress">
           <v-card-title class="_text-center">Register now</v-card-title>
           <v-card-text>
-
             <div class="_py-2">
               <!--                            <v-alert v-if="loginError" type="error" variant="tonal" density="comfortable">-->
               <!--                                {{ loginError }}-->
               <!--                            </v-alert>-->
             </div>
-
             <v-text-field label="Name" v-model="formDetails.name"
                           density="comfortable" variant="solo"></v-text-field>
             <v-text-field label="Email" v-model="formDetails.email"
@@ -24,16 +21,13 @@
                           density="comfortable" variant="solo"></v-text-field>
             <v-text-field label="Confirm Password" v-model="formDetails.password_confirmation" type="password"
                           density="comfortable" variant="solo"></v-text-field>
-
             <div>
-              <p>
-                if you have an account, please
+              <p class="text-center">
                 <router-link class="_text-blue-400"
-                             :to="{name:'login'}">login
+                             :to="{name:'login'}">Log in here
                 </router-link>
               </p>
             </div>
-
           </v-card-text>
           <v-card-actions>
             <v-btn color="primary"
@@ -51,8 +45,8 @@
     <MyParticles/>
   </v-app>
 </template>
-<script setup lang="ts">
 
+<script setup lang="ts">
 import {ref} from "vue";
 import axios from "axios";
 import {loginState} from "@/stats/loginState";
@@ -67,6 +61,7 @@ const formDetails = ref({
   password_confirmation: ''
 
 });
+
 const attemptRegister = async () => {
   loadingProgress.value = true;
 
@@ -83,8 +78,5 @@ const attemptRegister = async () => {
     console.log('error', e)
     loadingProgress.value = false;
   })
-
 }
-
-
 </script>
