@@ -105,7 +105,6 @@ const routes: CustomRouteRecordRaw[] = [
 					dashboard: () => import('@/views/Dashboard/InvestorsView.vue')
 				}
 			},
-
 			{
 				path: 'settings',
 				name: 'userSettings',

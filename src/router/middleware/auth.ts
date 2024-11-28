@@ -2,7 +2,6 @@ import {loginState} from '@/stats/loginState';
 import type {MiddlewareContext} from '@/router';
 
 export default async function auth({to, from, next, router, params}: MiddlewareContext) {
-    // console.log('auth middleware called with to:', to, 'from:', from, 'params:', params)
     const {isLogin, userLogin} = loginState();
 
     if (!isLogin || !userLogin.value) {
@@ -14,10 +13,10 @@ export default async function auth({to, from, next, router, params}: MiddlewareC
     }
 
     if (params!.length>0 && !params!.includes(userLogin.value.accountType)) {
-        // console.log('You are not allowed to access this page', params);
         console.log('You are not allowed to access this page' , params);
         return Promise.reject(false)
     }
+
     // console.log('You are allowed to access this page')
     // console.log('--------')
     // Continue to the next middleware or route

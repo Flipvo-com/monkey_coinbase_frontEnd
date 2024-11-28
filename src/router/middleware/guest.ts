@@ -1,5 +1,6 @@
 import {loginState} from '@/stats/loginState';
 import type {MiddlewareContext} from '@/router';
+
 /**
 * Middleware for guest
 * @param {MiddlewareContext} context

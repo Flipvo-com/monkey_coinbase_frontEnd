@@ -29,7 +29,6 @@ export const loginState = createGlobalState(() => {
 	};
 
 	const login = async (credentials: LoginData) => {
-
 		return await axios.post(import.meta.env.VITE_API_URL + "/login", credentials)
 			.then((response) => {
 				isLogin.value = true;
@@ -44,7 +43,6 @@ export const loginState = createGlobalState(() => {
 	};
 
 	const logout = () => {
-
 		axios.post(import.meta.env.VITE_API_URL + "/logout", {}, {
 			headers: {
 				Authorization: `Bearer ${loginToken.value}`,
