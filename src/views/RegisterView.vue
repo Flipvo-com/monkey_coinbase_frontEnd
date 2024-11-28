@@ -22,10 +22,9 @@
             <v-text-field label="Confirm Password" v-model="formDetails.password_confirmation" type="password"
                           density="comfortable" variant="solo"></v-text-field>
             <div>
-              <p>
-                if you have an account, please
+              <p class="text-center">
                 <router-link class="_text-blue-400"
-                             :to="{name:'login'}">login
+                             :to="{name:'login'}">Log in here
                 </router-link>
               </p>
             </div>
