@@ -1,5 +1,4 @@
 <template>
-
   <PieChart
       :totalValue="totalAccountUSDValue"
       :bitcoinValue="totalBtcValue"
@@ -7,7 +6,6 @@
       :usdcValue="totalUsdcValue"
       :chartData="[totalBtcValueNumeric, totalCashValueNumeric, totalUsdcValueNumeric]"
   />
-
 
   <v-container class="mb-2" style="padding: 1px" fluid>
     <v-row>

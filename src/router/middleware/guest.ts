@@ -11,7 +11,9 @@ export default async function guest({to, from, next, router, params}: Middleware
     if (isLogin.value && userLogin.value) {
         await router.push({name: 'dashboard'});
         return false;
+    } else {
+      // send to home page
+      await router.push({name: 'home'});
     }
-
   await next();
 };

@@ -1,3 +1,25 @@
+<!--<template>-->
+<!--  <v-app>-->
+<!--    <v-app-bar>-->
+<!--      <v-toolbar-title>Home</v-toolbar-title>-->
+<!--      <v-spacer></v-spacer>-->
+<!--      <v-btn  :to="{name:'login'}">Login</v-btn>-->
+<!--      <v-btn  :to="{name:'register'}">Register</v-btn>-->
+<!--    </v-app-bar>-->
+<!--     <v-main>-->
+<!--        <RouterView/>-->
+<!--     </v-main>-->
+<!--  </v-app>-->
+
+<!--</template>-->
+<!--<script setup lang="ts">-->
+<!--const navigateToExchange = () => {-->
+
+
+<!--}-->
+<!--</script>-->
+
+
 <template>
   <v-app>
     <v-app-bar app color="#1a237e" dark elevate-on-scroll>
@@ -173,6 +195,7 @@ import {useTheme} from "vuetify";
 import {onUnmounted} from "vue";
 
 const theme = useTheme();
+
 theme.global.name.value = 'light';
 
 const topCoins = [

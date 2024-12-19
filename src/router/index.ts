@@ -9,6 +9,7 @@ import {
 import middlewareRegistry from '@/plugins/middlewares/core/middlewareRegistry'
 import {middlewarePipeline, parseMiddleware} from '@/plugins/middlewares/core/middlewarePipeline';
 import {loginState} from "@/stats/loginState";
+import HomeNew from "@/views/HomeNew.vue";
 
 // Define custom meta properties
 export interface CustomRouteMeta {
@@ -70,6 +71,7 @@ const routes: CustomRouteRecordRaw[] = [
 			middleware: ['auth']
 		},
 		redirect: {name: 'dashboardIndex'},
+		// component: () => import('@/views/HomeNew.vue'),
 		component: () => import('@/views/DashboardView.vue'),
 		children: [
 			{
@@ -82,6 +84,20 @@ const routes: CustomRouteRecordRaw[] = [
 				},
 				components: {
 					dashboard: () => import('@/views/Dashboard/DashboardIndex.vue')
+					// dashboard: () => import('@/views/HomeNew.vue')
+				}
+			},
+			{
+				path: 'home',
+				name: 'dashboardHome',
+				meta: {
+					name: 'test',
+					icon: 'fa-duotone fa-home',
+					__auth: true
+				},
+				components: {
+					// dashboard: () => import('@/views/Dashboard/DashboardIndex.vue')
+					dashboard: () => import('@/views/HomeNew.vue')
 				}
 			},
 			{
@@ -162,9 +178,12 @@ router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, n
 	// If no middleware is specified, proceed to the route
 	if (!to.meta.middleware) {
 		const {isLogin} = loginState(); // Import loginState and use it to check if user is logged in
+
 		if (to.meta.guestOnly && isLogin.value) {
+			// todo - no, this is garbage, what about home page
 			return next({name: 'dashboard'}); // Redirect to dashboard if user is logged in and trying to access guest-only routes
 		}
+
 		return next();
 	}
 
